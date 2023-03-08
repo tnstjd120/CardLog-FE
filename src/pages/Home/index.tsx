@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { GetPostResponse } from '@/utils/models/Post';
-import { useNavigate } from 'react-router-dom';
+import { css } from "@emotion/react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { GetPostResponse } from "../../utils/models/Post";
 
 const postItemStyles = css`
   padding: 20px;
@@ -33,9 +33,9 @@ const Home = () => {
   const [postList, setPostList] = useState<GetPostResponse[]>([
     {
       id: 0,
-      title: '',
-      content: '',
-      update_dttm: '',
+      title: "",
+      content: "",
+      update_at: "",
     },
   ]);
 
@@ -45,9 +45,9 @@ const Home = () => {
 
   const getPosts = () => {
     axios
-      .get('http://localhost:8000/post', {
+      .get("http://localhost:8000/cards", {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       })
       .then((res) => {
@@ -73,7 +73,7 @@ const Home = () => {
             key={post.id}
             css={postItemStyles}
             onClick={() => {
-              navigate(`/post/${post.id}`);
+              navigate(`/posts/${post.id}`);
             }}
           >
             <h2>{post.title}</h2>
