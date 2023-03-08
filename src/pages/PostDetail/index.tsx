@@ -1,23 +1,23 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { GetPostResponse } from '@/utils/models/Post';
-import { useParams } from 'react-router-dom';
+import { css } from "@emotion/react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { GetPostResponse } from "../../utils/models/Post";
 
 const postStyles = css`
   padding: 20px;
 `;
 
 const PostDetail = () => {
-  const { id: postId } = useParams();
+  const { id } = useParams();
 
   const [postInfo, setPostInfo] = useState<GetPostResponse>({
     id: 0,
-    title: '',
-    content: '',
-    create_dttm: '',
-    update_dttm: '',
+    title: "",
+    content: "",
+    create_at: "",
+    update_at: "",
   });
 
   useEffect(() => {
@@ -26,9 +26,9 @@ const PostDetail = () => {
 
   const getPost = () => {
     axios
-      .get(`http://localhost:8000/post/${postId}`, {
+      .get(`http://localhost:8000/posts/${id}`, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       })
       .then((res) => {

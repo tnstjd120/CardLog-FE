@@ -1,20 +1,19 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
+import React from "react";
 
-import { css } from '@emotion/react';
-import { Route, Routes } from 'react-router-dom';
-import { GlobalStyles } from './styles/GlobalStyles';
-import Header from './components/Header';
-import SideBar from './components/SideBar';
-import Home from './pages/Home';
-import PageA from './pages/PageA';
-import PageB from './pages/PageB';
-import PageC from './pages/PageC';
-import PostDetail from './pages/PostDetail';
+import { css } from "@emotion/react";
+import { Route, Routes } from "react-router-dom";
+import { GlobalStyles } from "./styles/GlobalStyles";
+
+import SideBar from "./components/common/SideBar";
+import Home from "./pages/Home";
+import MyInfo from "./pages/MyInfo";
+import PostDetail from "./pages/PostDetail";
+import PrivateRoute from "./components/routes/PrivateRouter";
+import RouterInfo, { RouterItem } from "./components/routes/RouterInfo";
 
 const mainStyles = css`
   display: flex;
-  padding-top: 50px;
   height: 100vh;
 `;
 
@@ -28,18 +27,27 @@ function App() {
   return (
     <>
       <GlobalStyles />
-      <Header />
 
       <main css={mainStyles}>
         <SideBar />
 
         <div css={contentStyles}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/post/:id" element={<PostDetail />} />
-            <Route path="/a" element={<PageA />} />
-            <Route path="/b" element={<PageB />} />
-            <Route path="/c" element={<PageC />} />
+            {RouterInfo.map((item: RouterItem) => {
+              return (
+                <Route
+                  key={item.path}
+                  path={item.path}
+                  element={
+                    item.isLoggedIn ? (
+                      <PrivateRoute>{item.element}</PrivateRoute>
+                    ) : (
+                      <>{item.element}</>
+                    )
+                  }
+                />
+              );
+            })}
           </Routes>
         </div>
       </main>
