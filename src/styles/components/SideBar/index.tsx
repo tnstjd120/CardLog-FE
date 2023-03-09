@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css } from "@emotion/react";
 
 export const sideBarStyle = css`
   flex-basis: 300px;
@@ -8,26 +8,24 @@ export const sideBarStyle = css`
   font-size: 18px;
   border-right: 1px solid #ddd;
 
-  ul {
+  nav {
     display: flex;
     flex-direction: column;
 
-    li {
+    a {
       border-bottom: 1px solid #ddd;
 
-      &.active a {
+      display: block;
+      height: 100%;
+      padding: 10px 20px;
+      transition: 0.3s;
+
+      &:hover {
         color: royalblue;
       }
 
-      a {
-        display: block;
-        height: 100%;
-        padding: 10px 20px;
-        transition: 0.3s;
-
-        &:hover {
-          color: royalblue;
-        }
+      &.active {
+        color: royalblue;
       }
     }
   }
