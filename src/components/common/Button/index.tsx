@@ -1,13 +1,24 @@
 /** @jsxImportSource @emotion/react */
-
 import React from "react";
+import { buttonStyles } from "../../../styles/components/Button";
 
-const Button: React.FC = () => {
+interface ButtonProps {
+  className?: string;
+  children: React.ReactNode;
+}
+
+const BasicButton: React.FC<ButtonProps> = ({
+  className,
+  children,
+  ...rest
+}) => {
   return (
     <>
-      <button>Toggle</button>
+      <button {...rest} css={buttonStyles} className={`${className || ""}`}>
+        {children}
+      </button>
     </>
   );
 };
 
-export default Button;
+export default BasicButton;

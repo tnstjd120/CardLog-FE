@@ -4,7 +4,7 @@ import LogoSvg from "../../assets/logo.svg";
 
 const Login = () => {
   return (
-    <MobileContainer className="login">
+    <MobileContainer className="login" title={"로그인"}>
       <figure className="logo">{/* <img src={LogoSvg} alt="" /> */}</figure>
     </MobileContainer>
   );

@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { GlobalStyles } from "./styles/GlobalStyles";
-import SideBar from "./components/common/SideBar";
-import RoutesObject from "./components/routes";
-import { useState } from "react";
 import { useHasNav } from "./hooks/useHasNav";
 import { useLocation } from "react-router-dom";
+
+import SideBar from "./components/common/SideBar";
+import RoutesObject from "./components/routes";
 
 const mainStyles = css`
   display: flex;
@@ -15,7 +15,6 @@ const mainStyles = css`
 const contentStyles = css`
   flex: auto;
   height: 100%;
-  padding: 20px;
 `;
 
 function App() {
