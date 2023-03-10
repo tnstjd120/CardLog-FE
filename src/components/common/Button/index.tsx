@@ -1,24 +1,45 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
-import { buttonStyles } from "../../../styles/components/Button";
+import { css } from "@emotion/react";
+import { ThemeType } from "styles/emotion";
+import theme from "styles/theme";
+import { IconType } from "react-icons";
 
 interface ButtonProps {
-  className?: string;
-  children: React.ReactNode;
+  themeType: ThemeType;
+  children: string | React.ReactNode;
+  marginRight?: string;
+  size?: "sm" | "md" | "lg";
+  isBorder?: boolean;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const BasicButton: React.FC<ButtonProps> = ({
-  className,
+const Button: React.FC<ButtonProps> = ({
+  themeType,
   children,
-  ...rest
+  marginRight = 0,
+  size = "md",
+  isBorder = false,
+  onClick,
 }) => {
+  const buttonStyle = css`
+    font-size: 20px;
+    border: 0;
+    background-color: ${theme[themeType].backgroundColor};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    cursor: pointer;
+  `;
+
   return (
     <>
-      <button {...rest} css={buttonStyles} className={`${className || ""}`}>
+      <button css={buttonStyle} onClick={onClick}>
         {children}
       </button>
     </>
   );
 };
 
-export default BasicButton;
+export default Button;

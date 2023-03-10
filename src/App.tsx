@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { css, ThemeProvider, useTheme } from "@emotion/react";
 import { GlobalStyles } from "./styles/GlobalStyles";
 import { useHasNav } from "./hooks/useHasNav";
 import { useLocation } from "react-router-dom";

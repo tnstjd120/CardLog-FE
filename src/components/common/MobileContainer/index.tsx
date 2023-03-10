@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { FaChevronLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import theme from "styles/theme";
 import { mobileContainerStyles } from "../../../styles/components/MobileContainer";
-import BasicButton from "../Button";
+import Button from "../Button";
 
 interface MobileContainerProps {
   className?: string;
@@ -21,9 +22,9 @@ const MobileContainer: React.FC<MobileContainerProps> = ({
     <section css={mobileContainerStyles}>
       <div className="inner">
         <div className="top_nav">
-          <BasicButton>
+          <Button themeType="light">
             <FaChevronLeft />
-          </BasicButton>
+          </Button>
 
           <h4>{title}</h4>
         </div>
