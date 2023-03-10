@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { GetPostResponse } from "../../utils/models/Post";
+import { GetPostResponse } from "../../types/Post";
 
 const postStyles = css`
   padding: 20px;

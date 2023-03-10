@@ -1,13 +1,12 @@
-import { css } from '@emotion/react';
+import { css } from "@emotion/react";
 
 export const buttonStyles = css`
-  font-size: 16px;
+  font-size: 20px;
   border: 0;
-  border-radius: 8px;
+  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 14px;
-  background-color: royalblue;
   color: #fff;
+  cursor: pointer;
 `;

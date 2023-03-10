@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useAuth = (): boolean => {
+export const useAuth = (): boolean => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
@@ -11,5 +11,3 @@ const useAuth = (): boolean => {
 
   return isLoggedIn;
 };
-
-export default useAuth;
