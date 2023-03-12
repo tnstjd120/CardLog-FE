@@ -1,4 +1,4 @@
-const palette = {
+export const palette = {
   // White
   white: "#FFFFFF",
 
@@ -15,6 +15,7 @@ const palette = {
   gray2: "#B5B5B5",
 
   yellow: "#FFEDAC",
+  hoverYellow: "#FEE382",
   purple: "#D3D3F8",
   blue: "#A7D4E5",
   pink: "#FFD1DC",
