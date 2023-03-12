@@ -26,7 +26,6 @@ function App() {
 
       <main css={mainStyles}>
         {useHasNav(pathname) && <SideBar />}
-
         <div css={contentStyles}>{RoutesObject()}</div>
       </main>
     </>

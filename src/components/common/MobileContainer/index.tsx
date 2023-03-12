@@ -1,19 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import { FaChevronLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import theme from "styles/theme";
-import { mobileContainerStyles } from "../../../styles/components/MobileContainer";
-import Button from "../Button";
+import LogoSvg from "assets/logo.svg";
+import { mobileContainerStyles } from "styles/components/MobileContainer";
+import MobileTopButton from "../Button/MobileTopButton";
 
 interface MobileContainerProps {
-  className?: string;
   title: string;
+  caption: React.ReactElement;
   children: React.ReactNode;
 }
 
 const MobileContainer: React.FC<MobileContainerProps> = ({
-  className,
   title,
+  caption,
   children,
 }) => {
   const navigate = useNavigate();
@@ -22,14 +22,23 @@ const MobileContainer: React.FC<MobileContainerProps> = ({
     <section css={mobileContainerStyles}>
       <div className="inner">
         <div className="top_nav">
-          <Button themeType="light">
-            <FaChevronLeft />
-          </Button>
+          <MobileTopButton
+            icon={<FaChevronLeft />}
+            onClick={() => navigate(-1)}
+          />
 
           <h4>{title}</h4>
         </div>
 
-        <div className={`content ${className}`}>{children}</div>
+        <div className="content">
+          <figure className="logo">
+            <img src={LogoSvg} alt="" />
+
+            <figcaption>{caption}</figcaption>
+          </figure>
+
+          {children}
+        </div>
       </div>
     </section>
   );
