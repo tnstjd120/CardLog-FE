@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
-import { Global } from '@emotion/react';
-import { css } from '@emotion/react';
-import React, { ComponentProps } from 'react';
+import { Global } from "@emotion/react";
+import { css } from "@emotion/react";
+import React, { ComponentProps } from "react";
 
 export const GlobalStyles: React.FC<ComponentProps<any>> = () => (
   <Global
@@ -21,7 +21,7 @@ export const GlobalStyles: React.FC<ComponentProps<any>> = () => (
       body {
         margin: 0;
         padding: 0;
-        font-family: sans-serif;
+        font-family: "Noto Sans KR", sans-serif;
       }
       ul {
         margin: 0;
@@ -31,6 +31,11 @@ export const GlobalStyles: React.FC<ComponentProps<any>> = () => (
       a {
         color: #333;
         text-decoration: none;
+      }
+      img {
+        width: 100%;
+        max-width: 100%;
+        vertical-align: top;
       }
     `}
   />
