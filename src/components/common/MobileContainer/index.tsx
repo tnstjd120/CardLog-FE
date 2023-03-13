@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { FaChevronLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import LogoSvg from "assets/logo.svg";
+
 import { mobileContainerStyles } from "styles/components/MobileContainer";
 import MobileTopButton from "../Button/MobileTopButton";
 
@@ -32,7 +32,7 @@ const MobileContainer: React.FC<MobileContainerProps> = ({
 
         <div className="content">
           <figure className="logo">
-            <img src={LogoSvg} alt="" />
+            <img src="assets/logo.svg" alt="CardLog Logo" />
 
             <figcaption>{caption}</figcaption>
           </figure>

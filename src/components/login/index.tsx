@@ -5,20 +5,7 @@ import InputText from "components/common/Input/InputText";
 import MobileBottomButton from "components/common/Button/MobileBottomButton";
 import ButtonGroup from "./ButtonGroup";
 import axios from "axios";
-
-type LoginSuccessMessage = "SUCCESS";
-type loginFailMessage = "FAIL";
-
-interface UserResponse {
-  email: string;
-  password: string;
-}
-
-interface LoginResponse {
-  message: LoginSuccessMessage | loginFailMessage;
-  token: string;
-  userInfo: UserResponse;
-}
+import { LoginResponse, UserResponse } from "types/Login";
 
 const login = async (
   email: string,
