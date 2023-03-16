@@ -10,7 +10,8 @@ export interface CheckBoxProps {
   themeType?: ThemeType;
   children?: string | React.ReactElement;
   id?: string;
-  isChecked?: boolean;
+  name?: string;
+  checked?: boolean;
   marginRight?: string;
   borderBottom?: boolean;
   arrowRight?: boolean;
@@ -23,7 +24,8 @@ const CheckBox: React.FC<CheckBoxProps> = ({
   themeType,
   children,
   id,
-  isChecked,
+  name,
+  checked,
   marginRight = 0,
   borderBottom,
   arrowRight,
@@ -94,7 +96,8 @@ const CheckBox: React.FC<CheckBoxProps> = ({
         <input
           type="checkbox"
           id={id}
-          checked={isChecked}
+          name={name}
+          checked={checked}
           onChange={onChange}
         />
         <i>
