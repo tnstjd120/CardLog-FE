@@ -1,7 +1,8 @@
-import Home from "../../pages/Home";
-import Login from "../../pages/Login";
-import MyInfo from "../../pages/MyInfo";
-import PostDetail from "../../pages/PostDetail";
+import SignUp from "pages/SignUp";
+import Home from "pages/Home";
+import Login from "pages/Login";
+import MyInfo from "pages/MyInfo";
+import PostDetail from "pages/PostDetail";
 
 export interface RouterItem {
   path: string;
@@ -29,6 +30,14 @@ const RouterInfo: RouterItemType = {
     path: "/login",
     element: <Login />,
     label: "로그인",
+    isLoggedIn: false,
+    isWithNav: false,
+    isNavIn: true,
+  },
+  SIGNUP: {
+    path: "/signup",
+    element: <SignUp />,
+    label: "회원가입",
     isLoggedIn: false,
     isWithNav: false,
     isNavIn: true,

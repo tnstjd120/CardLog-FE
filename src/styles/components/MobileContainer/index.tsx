@@ -6,7 +6,7 @@ export const mobileContainerStyles = css`
   height: 100vh;
 
   .inner {
-    background-color: ${palette.gray0};
+    background-color: ${palette.gray2};
     height: 100vh;
     width: 100%;
     max-width: 500px;

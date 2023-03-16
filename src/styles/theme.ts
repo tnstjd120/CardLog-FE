@@ -10,9 +10,9 @@ export const palette = {
   black4: "#999999",
 
   // Gray
-  gray0: "#F5F5F5",
+  gray0: "#B5B5B5",
   gray1: "#DDDDDD",
-  gray2: "#B5B5B5",
+  gray2: "#F5F5F5",
 
   yellow: "#FFEDAC",
   hoverYellow: "#FEE382",
