@@ -11,7 +11,13 @@ const login = async (
   email: string,
   password: string
 ): Promise<LoginResponse | null> => {
-  const user: UserResponse = { email: email, password: password };
+  const response: any = await fetch("localhost:8000/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+
+  const user = response;
 
   return user
     ? {
