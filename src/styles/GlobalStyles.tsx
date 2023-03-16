@@ -37,6 +37,9 @@ export const GlobalStyles: React.FC<ComponentProps<any>> = () => (
         max-width: 100%;
         vertical-align: top;
       }
+      .swal2-styled.swal2-default-outline:focus {
+        box-shadow: none;
+      }
     `}
   />
 );
