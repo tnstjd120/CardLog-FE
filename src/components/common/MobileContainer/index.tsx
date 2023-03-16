@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 import { mobileContainerStyles } from "styles/components/MobileContainer";
 import MobileTopButton from "../Button/MobileTopButton";
+import Swal from "sweetalert2";
+import { palette } from "styles/theme";
 
 interface MobileContainerProps {
   title: string;
@@ -24,7 +26,23 @@ const MobileContainer: React.FC<MobileContainerProps> = ({
         <div className="top_nav">
           <MobileTopButton
             icon={<FaChevronLeft />}
-            onClick={() => navigate(-1)}
+            onClick={() => {
+              title === "회원가입"
+                ? Swal.fire({
+                    icon: "warning",
+                    html: "정말로 뒤로 가시겠습니까? <br> 입력했던 정보가 초기화 됩니다.",
+                    showCancelButton: true,
+                    confirmButtonText: "확인",
+                    cancelButtonText: "취소",
+                    confirmButtonColor: palette.black3,
+                    cancelButtonColor: "#dc3545",
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      navigate(-1);
+                    }
+                  })
+                : navigate(-1);
+            }}
           />
 
           <h4>{title}</h4>
