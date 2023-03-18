@@ -19,6 +19,9 @@ export const palette = {
   purple: "#D3D3F8",
   blue: "#A7D4E5",
   pink: "#FFD1DC",
+
+  success: "#28a745",
+  danger: "#dc3545",
 };
 
 const theme = {

@@ -5,7 +5,7 @@ import { palette } from "styles/theme";
 import { ThemeType } from "styles/emotion";
 import theme from "styles/theme";
 
-interface InputProps {
+export interface InputProps {
   themeType?: ThemeType;
   value?: string;
   ref?: React.RefObject<HTMLInputElement>;
@@ -17,6 +17,7 @@ interface InputProps {
   size?: "sm" | "md" | "lg";
   placeholder?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
 }
 
 const InputText = React.forwardRef<HTMLInputElement, InputProps>(
@@ -25,13 +26,14 @@ const InputText = React.forwardRef<HTMLInputElement, InputProps>(
       themeType = "light",
       value,
       name,
-      required,
+      required = false,
       maxLength,
       marginBottom = "20px",
       type = "text",
       size = "md",
       placeholder = "",
       onChange,
+      onBlur,
     },
     ref
   ) => {
@@ -60,9 +62,10 @@ const InputText = React.forwardRef<HTMLInputElement, InputProps>(
           css={inputStyle}
           placeholder={placeholder}
           value={value}
+          required={required}
           maxLength={maxLength}
           onChange={onChange}
-          required={required}
+          onBlur={onBlur}
         />
       </>
     );

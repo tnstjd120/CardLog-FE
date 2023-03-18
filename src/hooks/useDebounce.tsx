@@ -6,7 +6,7 @@ interface useDebounceProps {
 }
 
 export const useDebounce = ({ value, delay }: useDebounceProps) => {
-  const [debounceValue, setDebounceValue] = useState(value);
+  const [debounceValue, setDebounceValue] = useState<string>(value);
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebounceValue(value);

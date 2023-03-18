@@ -1,77 +1,102 @@
 /** @jsxImportSource @emotion/react */
-import { useState, useRef, Dispatch } from "react";
+import { useState, useRef, Dispatch, ChangeEvent, useEffect } from "react";
 import InputText from "components/common/Input/InputText";
 import { SignUpInfoProps } from ".";
+import MobileBottomButton from "components/common/Button/MobileBottomButton";
+import ValidInputText from "components/common/Input/ValidInputText";
+import { css } from "@emotion/react";
+import { useDebounce } from "hooks/useDebounce";
 
 interface secondStepProps {
-  setIsSecondStep: Dispatch<React.SetStateAction<boolean>>;
+  setSignUpStep: Dispatch<React.SetStateAction<number>>;
   setSignUpInfo: Dispatch<React.SetStateAction<SignUpInfoProps | null>>;
 }
 
-const SecondStep = ({ setIsSecondStep, setSignUpInfo }: secondStepProps) => {
-  const userEmailRef = useRef<HTMLInputElement | null>(null);
-  const userNameRef = useRef<HTMLInputElement | null>(null);
-  const userPasswordRef = useRef<HTMLInputElement | null>(null);
-  const userPasswordConfirmRef = useRef<HTMLInputElement | null>(null);
-  const userPhoneRef = useRef<HTMLInputElement | null>(null);
+const SecondStep = ({ setSignUpStep, setSignUpInfo }: secondStepProps) => {
+  console.log("secondStep Render");
+  // const userEmailRef = useRef<HTMLInputElement | null>(null);
+  // const userNameRef = useRef<HTMLInputElement | null>(null);
+  // const userPasswordRef = useRef<HTMLInputElement | null>(null);
+  // const userPasswordConfirmRef = useRef<HTMLInputElement | null>(null);
+  // const userPhoneRef = useRef<HTMLInputElement | null>(null);
+
+  const [originPassword, setOriginPassword] = useState<string | null>("");
+  // const []
+
+  const handleSecondStepClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+
+    // setSignUpInfo({
+    //   email: userEmailRef.current?.value ?? "",
+    //   name: userNameRef.current?.value ?? "",
+    //   password: userPasswordConfirmRef.current?.value ?? "",
+    //   phone: userPhoneRef.current?.value ?? "",
+    // });
+  };
 
   return (
-    <form>
-      <InputText
+    <form
+      css={css`
+        width: 100%;
+      `}
+    >
+      <ValidInputText
         type="email"
         name="email"
         placeholder="이메일"
-        marginBottom="30px"
-        ref={userEmailRef}
-        onChange={(e) => {
-          const emailExp =
-            /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-          console.log(e.target.value, emailExp.test(e.target.value));
-        }}
+        marginBottom="50px"
+        validType="email"
+        validTooltip="이메일 형식에 적합합니다."
+        invalidTooltip="이메일 형식에 적합하지 않습니다."
       />
-      <InputText
+
+      <ValidInputText
         type="text"
         name="name"
         placeholder="이름"
-        marginBottom="30px"
-        ref={userNameRef}
+        marginBottom="50px"
+        validType="name"
+        validTooltip="이름 형식에 적합합니다."
+        invalidTooltip="이름 형식에 적합하지 않습니다."
       />
-      <InputText
+
+      <ValidInputText
         type="password"
         name="password"
         placeholder="비밀번호"
-        marginBottom="30px"
-        ref={userPasswordRef}
+        marginBottom="50px"
+        validType="password"
+        validTooltip="비밀번호 형식에 적합합니다."
+        invalidTooltip="비밀번호 형식에 적합하지 않습니다."
+        onBlur={(e) => setOriginPassword(e.target.value)}
       />
-      <InputText
+
+      <ValidInputText
         type="password"
-        name="passwordCheck"
+        name="passwordConfirm"
         placeholder="비밀번호 확인"
-        marginBottom="30px"
-        ref={userPasswordConfirmRef}
+        marginBottom="50px"
+        validType="passwordConfirm"
+        validTooltip="비밀번호가 일치합니다."
+        invalidTooltip="비밀번호가 일치하지 않습니다."
+        originPassword={originPassword}
       />
-      <InputText
+
+      <ValidInputText
         type="text"
         name="phone"
-        placeholder="핸드폰 번호"
-        ref={userPhoneRef}
-        maxLength={13}
-        onChange={(e) => {
-          e.target.value = e.target.value
-            .replace(/[^0-9]/g, "")
-            .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
-            .replace(/(\-{1,2})$/g, "");
-
-          if (e.target.value.length > 12) {
-            setSignUpInfo({
-              email: userEmailRef.current?.value ?? "",
-              name: userNameRef.current?.value ?? "",
-              password: userPasswordConfirmRef.current?.value ?? "",
-              phone: userPhoneRef.current?.value ?? "",
-            });
-          }
-        }}
+        placeholder="휴대폰 번호"
+        marginBottom="50px"
+        validType="phone"
+        validTooltip="휴대폰 번호 형식에 적합합니다."
+        invalidTooltip="휴대폰 번호 형식에 적합하지 않습니다."
       />
+
+      <MobileBottomButton onClick={(e) => handleSecondStepClick(e)}>
+        다음
+      </MobileBottomButton>
     </form>
   );
 };
