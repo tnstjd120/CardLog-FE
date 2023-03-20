@@ -35,6 +35,7 @@ const ValidInputText = React.forwardRef<HTMLInputElement, ValidInputTextProps>(
 
     const tooltipStyle = css`
       position: relative;
+      margin-bottom: 30px;
 
       & input {
         border-bottom: 1px solid
@@ -52,7 +53,7 @@ const ValidInputText = React.forwardRef<HTMLInputElement, ValidInputTextProps>(
       & small {
         position: absolute;
         left: 6px;
-        top: 50%;
+        bottom: 0;
         color: ${palette.black1};
       }
     `;

@@ -1,4 +1,4 @@
-import SignUpForm from "components/\bsignup";
+import SignUpForm from "components/signup";
 import React from "react";
 import MobileContainer from "../../components/common/MobileContainer";
 
