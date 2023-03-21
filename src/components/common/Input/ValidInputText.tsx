@@ -5,33 +5,25 @@ import { palette } from "styles/theme";
 import { ThemeType } from "styles/emotion";
 import theme from "styles/theme";
 import InputText, { InputProps } from "./InputText";
+import { validObjProps } from "components/signup/validObj";
 
 type validType = "email" | "name" | "password" | "passwordConfirm" | "phone";
 
 interface ValidInputTextProps extends InputProps {
   validType: validType;
   validTooltip: string;
+  validObj: validObjProps;
   invalidTooltip: string;
-  originPassword?: string | null;
 }
 
 const ValidInputText = React.forwardRef<HTMLInputElement, ValidInputTextProps>(
   (props, ref) => {
-    const { validType, validTooltip, invalidTooltip, originPassword, ...rest } =
+    const { validType, validTooltip, validObj, invalidTooltip, ...rest } =
       props;
     const [isValid, setIsValid] = useState<boolean | null>(null);
 
     // FIXME ref를 컴포넌트 안으로 바꿨는데 이걸로 처리할 수 있는 부분 생각하기
     const inputRef = useRef<HTMLInputElement | null>(null);
-
-    const regexObj = {
-      email:
-        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
-      name: /^[가-힣]{2,5}$/, // 이름 2 ~ 5글자
-      password:
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/, // 비밀번호 (최소 8자리 숫자,문자,특수문자 최소 1개),
-      phone: /01[016789]-[^0][0-9]{2,3}-[0-9]{4}/, // 휴대폰 번호 양식
-    };
 
     const tooltipStyle = css`
       position: relative;
@@ -64,10 +56,8 @@ const ValidInputText = React.forwardRef<HTMLInputElement, ValidInputTextProps>(
           {...rest}
           ref={inputRef}
           onChange={(e) => {
-            console.log(validType, " == ", inputRef.current?.value);
-
             if (validType !== "passwordConfirm") {
-              setIsValid(regexObj[validType].test(e.target.value));
+              setIsValid(validObj[validType].regexp.test(e.target.value));
 
               if (validType === "phone") {
                 e.target.value = e.target.value
@@ -76,8 +66,15 @@ const ValidInputText = React.forwardRef<HTMLInputElement, ValidInputTextProps>(
                   .replace(/(\-{1,2})$/g, "");
               }
             } else {
-              setIsValid(originPassword === e.target.value);
+              setIsValid(validObj.password.value === e.target.value);
             }
+          }}
+          onBlur={(e) => {
+            validObj[validType].isTest = isValid;
+            validObj[validType].value = e.target.value;
+            validType === "passwordConfirm" &&
+              setIsValid(validObj.password.value === e.target.value);
+            console.log(validObj);
           }}
         />
         {/* FIXME 비밀번호 확인까지 작성 후 다시 비밀번호를 변경했을 때 비밀번호 확인 부분 일치하지 않는 부분 기능 작업 해야함. */}
