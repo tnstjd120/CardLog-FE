@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
-import { css } from "@emotion/react";
+import { css, SerializedStyles } from "@emotion/react";
 import { palette } from "styles/theme";
 import { ThemeType } from "styles/emotion";
 import theme from "styles/theme";
@@ -16,6 +16,7 @@ export interface InputProps {
   required?: boolean;
   size?: "sm" | "md" | "lg";
   placeholder?: string;
+  customCss?: SerializedStyles;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
 }
@@ -32,6 +33,7 @@ const InputText = React.forwardRef<HTMLInputElement, InputProps>(
       type = "text",
       size = "md",
       placeholder = "",
+      customCss = "",
       onChange,
       onBlur,
     },
@@ -47,6 +49,7 @@ const InputText = React.forwardRef<HTMLInputElement, InputProps>(
       color: ${theme[themeType].color};
       outline: none;
       margin-bottom: ${marginBottom};
+      ${customCss}
 
       &:focus {
         border-bottom: 1px solid ${palette.black1};

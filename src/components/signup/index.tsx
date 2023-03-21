@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginFormStyle } from "styles/components/login";
 import InputText from "components/common/Input/InputText";
 import MobileBottomButton from "components/common/Button/MobileBottomButton";
@@ -24,6 +24,10 @@ const SignUpForm = () => {
 
   const [signUpInfo, setSignUpInfo] = useState<SignUpInfoProps | null>(null);
 
+  useEffect(() => {
+    console.log(signUpInfo);
+  }, [signUpInfo]);
+
   return (
     <>
       <Pagination signUpStep={signUpStep} setSignUpStep={setSignUpStep} />
@@ -36,7 +40,7 @@ const SignUpForm = () => {
           setSignUpInfo={setSignUpInfo}
         />
       ) : (
-        <ThirdStep setSignUpStep={setSignUpStep} />
+        <ThirdStep setSignUpStep={setSignUpStep} signUpInfo={signUpInfo} />
       )}
     </>
   );
