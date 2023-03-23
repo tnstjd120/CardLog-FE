@@ -1,4 +1,5 @@
 import SignUp from "pages/SignUp";
+import SignUpSuccess from "pages/SignUpSuccess";
 import Home from "pages/Home";
 import Login from "pages/Login";
 import MyInfo from "pages/MyInfo";
@@ -41,6 +42,14 @@ const RouterInfo: RouterItemType = {
     isLoggedIn: false,
     isWithNav: false,
     isNavIn: true,
+  },
+  SIGNUP_SUCCESS: {
+    path: "/signup/success",
+    element: <SignUpSuccess />,
+    label: "회원가입 성공",
+    isLoggedIn: false,
+    isWithNav: false,
+    isNavIn: false,
   },
   POST: {
     path: "/posts/:id",

@@ -2,13 +2,14 @@
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface MyInfoState {
+export interface MyInfoState {
   id: number | null;
   name: string | null;
   email: string | null;
   profileImg: string | null;
   about: string | null;
   blogName: string | null;
+  access_token: string | null;
 }
 
 const initialState: MyInfoState = {
@@ -18,6 +19,7 @@ const initialState: MyInfoState = {
   profileImg: null,
   about: null,
   blogName: null,
+  access_token: null,
 };
 
 const myInfoSlice = createSlice({
@@ -31,6 +33,7 @@ const myInfoSlice = createSlice({
       state.profileImg = action.payload.profileImg;
       state.about = action.payload.about;
       state.blogName = action.payload.blogName;
+      state.access_token = action.payload.access_token;
     },
     clearMyInfo: (state) => {
       state.id = null;
@@ -39,6 +42,7 @@ const myInfoSlice = createSlice({
       state.profileImg = null;
       state.about = null;
       state.blogName = null;
+      state.access_token = null;
     },
   },
 });

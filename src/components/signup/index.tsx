@@ -1,22 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
-import { loginFormStyle } from "styles/components/login";
-import InputText from "components/common/Input/InputText";
-import MobileBottomButton from "components/common/Button/MobileBottomButton";
-import axios from "axios";
-import { LoginResponse, UserResponse } from "types/Login";
-import FirstStep from "./FirstStep";
-import SecondStep from "./SecondStep";
-import ThirdStep from "./ThirdStep";
+import AgreeStep from "./AgreeStep";
+import SecondStep from "./UserInfoStep";
+import FinishStep from "./FinishStep";
 import Pagination from "./Pagination";
-import Swal from "sweetalert2";
-import { palette } from "styles/theme";
+import api from "libs/axios";
+import API_Path from "utils/path/API_Path";
 
 export interface SignUpInfoProps {
   email: string;
-  name: string;
-  password: string;
-  phone: string;
+  username: string;
+  password1: string;
+  password2: string;
 }
 
 const SignUpForm = () => {
@@ -25,22 +20,35 @@ const SignUpForm = () => {
   const [signUpInfo, setSignUpInfo] = useState<SignUpInfoProps | null>(null);
 
   useEffect(() => {
-    console.log(signUpInfo);
+    console.log("signupForm render");
+    if (signUpStep === 3) {
+      handleSignUp();
+    }
   }, [signUpInfo]);
+
+  const handleSignUp = async () => {
+    console.log("signup");
+    await api
+      .post(API_Path.SIGNUP, signUpInfo)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch(console.error);
+  };
 
   return (
     <>
       <Pagination signUpStep={signUpStep} setSignUpStep={setSignUpStep} />
 
       {signUpStep === 1 ? (
-        <FirstStep setSignUpStep={setSignUpStep} />
+        <AgreeStep setSignUpStep={setSignUpStep} />
       ) : signUpStep === 2 ? (
         <SecondStep
           setSignUpStep={setSignUpStep}
           setSignUpInfo={setSignUpInfo}
         />
       ) : (
-        <ThirdStep setSignUpStep={setSignUpStep} signUpInfo={signUpInfo} />
+        <FinishStep setSignUpStep={setSignUpStep} signUpInfo={signUpInfo} />
       )}
     </>
   );
