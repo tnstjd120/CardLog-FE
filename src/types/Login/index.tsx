@@ -1,13 +1,10 @@
-type LoginSuccessMessage = "SUCCESS";
-type loginFailMessage = "FAIL";
-
 export interface UserResponse {
+  id: number;
   email: string;
-  password: string;
 }
 
 export interface LoginResponse {
-  message: LoginSuccessMessage | loginFailMessage;
-  token: string;
-  userInfo: UserResponse;
+  access_token: string;
+  refresh_token: string;
+  user: UserResponse;
 }
