@@ -4,49 +4,40 @@ import { loginFormStyle } from "styles/components/login";
 import InputText from "components/common/Input/InputText";
 import MobileBottomButton from "components/common/Button/MobileBottomButton";
 import ButtonGroup from "./ButtonGroup";
+import { LoginResponse } from "types/Login";
+import api from "libs/axios";
+import API_Path from "utils/path/API_Path";
+import Swal from "sweetalert2";
+import { palette } from "styles/theme";
+import { RootState } from "store";
+import { useSelector, useDispatch } from "react-redux";
+import { setMyInfo } from "store/myInfo";
+import { useCookies } from "react-cookie";
 import axios from "axios";
-import { LoginResponse, UserResponse } from "types/Login";
-
-const login = async (
-  email: string,
-  password: string
-): Promise<LoginResponse | null> => {
-  const response: any = await fetch("localhost:8000/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
-
-  const user = response;
-
-  return user
-    ? {
-        message: "SUCCESS",
-        token: "dsafdsafdsa2414",
-        userInfo: { email: user.email, password: user.password },
-      }
-    : null;
-};
+import { login } from "auth/jwtAuth";
+import { getCookie } from "utils/cookie/universal-cookie";
+import { useNavigate } from "react-router-dom";
+import RouterInfo from "components/routes/RouterInfo";
 
 const LoginForm = () => {
-  const [userInfo, setUserInfo] = useState<UserResponse>({
-    email: "",
-    password: "",
-  });
+  const user = useSelector((state: RootState) => state.myInfo);
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
 
-    const loginRes = await login(
-      formData.get("email") as string,
-      formData.get("password") as string
-    );
+    const reqData = {
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
+    };
 
-    if (!loginRes) return;
+    await login(reqData);
 
-    setUserInfo(loginRes.userInfo);
+    if (getCookie("access")) navigate(RouterInfo.HOME.path, { replace: true });
   };
 
   return (
