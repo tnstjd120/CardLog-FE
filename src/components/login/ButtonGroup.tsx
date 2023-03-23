@@ -4,6 +4,8 @@ import { palette } from "styles/theme";
 import Button, { ButtonProps } from "components/common/Button";
 import { useNavigate } from "react-router-dom";
 import RouterInfo from "components/routes/RouterInfo";
+import api from "libs/axios";
+import API_Path from "utils/path/API_Path";
 
 const ButtonGroup = () => {
   const navigate = useNavigate();
@@ -40,7 +42,13 @@ const ButtonGroup = () => {
         }
       `}
     >
-      <CustomButton>아이디 찾기</CustomButton>
+      <CustomButton
+        onClick={async () => {
+          await api.post(API_Path.LOGOUT);
+        }}
+      >
+        아이디 찾기
+      </CustomButton>
       <CustomButton>비밀번호 찾기</CustomButton>
       <CustomButton onClick={() => navigate(SIGNUP.path)}>
         회원가입
