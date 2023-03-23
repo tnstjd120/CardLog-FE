@@ -7,7 +7,12 @@ import theme from "styles/theme";
 import InputText, { InputProps } from "./InputText";
 import { validObjProps } from "components/signup/validObj";
 
-type validType = "email" | "name" | "password" | "passwordConfirm" | "phone";
+type validType =
+  | "email"
+  | "username"
+  | "password"
+  | "passwordConfirm"
+  | "phone";
 
 interface ValidInputTextProps extends InputProps {
   validType: validType;
