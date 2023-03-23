@@ -6,7 +6,7 @@ import MobileBottomButton from "components/common/Button/MobileBottomButton";
 import Swal from "sweetalert2";
 import { palette } from "styles/theme";
 
-interface FirstStepProps {
+interface AgreeStepProps {
   setSignUpStep: Dispatch<React.SetStateAction<number>>;
 }
 
@@ -16,7 +16,7 @@ interface CheckListProps {
   essential: boolean;
 }
 
-const FirstStep = ({ setSignUpStep }: FirstStepProps) => {
+const AgreeStep = ({ setSignUpStep }: AgreeStepProps) => {
   const [allCheck, setAllCheck] = useState<boolean>(false);
   const [checkList, setCheckList] = useState<CheckListProps[]>([
     {
@@ -41,7 +41,7 @@ const FirstStep = ({ setSignUpStep }: FirstStepProps) => {
     setAllCheck(trueCheckList.length === checkList.length ? true : false);
   }, [checkList]);
 
-  const handleFirstStepClick = () => {
+  const handleAgreeStepClick = () => {
     const essentialList = checkList.filter((item) => item.essential);
     const essentialCheckList = essentialList.filter((item) => item.checked);
 
@@ -107,11 +107,11 @@ const FirstStep = ({ setSignUpStep }: FirstStepProps) => {
         </CustomCheckBox>
       ))}
 
-      <MobileBottomButton onClick={handleFirstStepClick}>
+      <MobileBottomButton onClick={handleAgreeStepClick}>
         다음
       </MobileBottomButton>
     </>
   );
 };
 
-export default FirstStep;
+export default AgreeStep;

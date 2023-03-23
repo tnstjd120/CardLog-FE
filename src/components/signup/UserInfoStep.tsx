@@ -1,34 +1,25 @@
 /** @jsxImportSource @emotion/react */
-import { useState, useRef, Dispatch, ChangeEvent, useEffect } from "react";
-import InputText from "components/common/Input/InputText";
+import { Dispatch } from "react";
 import { SignUpInfoProps } from ".";
 import MobileBottomButton from "components/common/Button/MobileBottomButton";
 import ValidInputText from "components/common/Input/ValidInputText";
-import { css } from "@emotion/react";
-import { useDebounce } from "hooks/useDebounce";
 import validObj from "./validObj";
 import Swal from "sweetalert2";
 import { palette } from "styles/theme";
-import { SecondStepStyles } from "styles/components/signup";
+import { UserInfoStepStyles } from "styles/components/signup";
 
-interface secondStepProps {
+interface UserInfoStepProps {
   setSignUpStep: Dispatch<React.SetStateAction<number>>;
   setSignUpInfo: Dispatch<React.SetStateAction<SignUpInfoProps | null>>;
 }
 
-const SecondStep = ({ setSignUpStep, setSignUpInfo }: secondStepProps) => {
-  console.log("secondStep Render");
-
-  const handleSecondStepClick = (
+const UserInfoStep = ({ setSignUpStep, setSignUpInfo }: UserInfoStepProps) => {
+  const handleUserInfoStepClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
 
     for (let [key, item] of Object.entries(validObj)) {
-      console.log("key == ", key);
-      console.log("item == ", item.value);
-      console.log("======================");
-
       if (!item.isTest) {
         return Swal.fire({
           icon: "warning",
@@ -42,16 +33,16 @@ const SecondStep = ({ setSignUpStep, setSignUpInfo }: secondStepProps) => {
 
     setSignUpInfo({
       email: validObj.email.value,
-      name: validObj.name.value,
-      password: validObj.password.value,
-      phone: validObj.phone.value,
+      username: validObj.username.value,
+      password1: validObj.password.value,
+      password2: validObj.passwordConfirm.value,
     });
 
     setSignUpStep((prev) => prev + 1);
   };
 
   return (
-    <form css={SecondStepStyles}>
+    <form css={UserInfoStepStyles}>
       <ValidInputText
         type="email"
         name="email"
@@ -64,9 +55,9 @@ const SecondStep = ({ setSignUpStep, setSignUpInfo }: secondStepProps) => {
 
       <ValidInputText
         type="text"
-        name="name"
+        name="username"
         placeholder="이름"
-        validType="name"
+        validType="username"
         validTooltip="이름 형식에 적합합니다."
         invalidTooltip="이름 형식에 적합하지 않습니다."
         validObj={validObj}
@@ -92,7 +83,7 @@ const SecondStep = ({ setSignUpStep, setSignUpInfo }: secondStepProps) => {
         validObj={validObj}
       />
 
-      <ValidInputText
+      {/* <ValidInputText
         type="text"
         name="phone"
         placeholder="휴대폰 번호"
@@ -100,13 +91,13 @@ const SecondStep = ({ setSignUpStep, setSignUpInfo }: secondStepProps) => {
         validTooltip="휴대폰 번호 형식에 적합합니다."
         invalidTooltip="휴대폰 번호 형식에 적합하지 않습니다."
         validObj={validObj}
-      />
+      /> */}
 
-      <MobileBottomButton onClick={(e) => handleSecondStepClick(e)}>
+      <MobileBottomButton onClick={(e) => handleUserInfoStepClick(e)}>
         다음
       </MobileBottomButton>
     </form>
   );
 };
 
-export default SecondStep;
+export default UserInfoStep;
