@@ -39,23 +39,23 @@ const Home = () => {
     },
   ]);
 
-  useEffect(() => {
-    getPosts();
-  }, []);
+  // useEffect(() => {
+  //   getPosts();
+  // }, []);
 
-  const getPosts = () => {
-    axios
-      .get("http://localhost:8000/cards", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        setPostList(res.data);
-        console.log(res.data);
-      })
-      .catch((error) => console.log(error));
-  };
+  // const getPosts = () => {
+  //   axios
+  //     .get("http://localhost:8000/cards", {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     })
+  //     .then((res) => {
+  //       setPostList(res.data);
+  //       console.log(res.data);
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
 
   return (
     <div>
