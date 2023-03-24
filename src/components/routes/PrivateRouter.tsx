@@ -1,19 +1,14 @@
-import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { getCookie } from "utils/cookie/universal-cookie";
 
 interface PrivateRouteProps {
-  children: ReactNode;
+  children: JSX.Element;
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-  let auth = false;
+  const accessToken = getCookie("access");
 
-  useAuth().then((res) => console.log("auth endpoint", res));
-
-  // console.log(auth);
-
-  return auth ? <>{children}</> : <Navigate to="/login" />;
+  return accessToken ? <>{children}</> : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

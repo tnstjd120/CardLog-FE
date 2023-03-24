@@ -42,13 +42,7 @@ const ButtonGroup = () => {
         }
       `}
     >
-      <CustomButton
-        onClick={async () => {
-          await api.post(API_Path.LOGOUT);
-        }}
-      >
-        아이디 찾기
-      </CustomButton>
+      <CustomButton>아이디 찾기</CustomButton>
       <CustomButton>비밀번호 찾기</CustomButton>
       <CustomButton onClick={() => navigate(SIGNUP.path)}>
         회원가입
