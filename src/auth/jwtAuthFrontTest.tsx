@@ -1,5 +1,5 @@
 import axios from "axios";
-import api from "libs/axios";
+import { api } from "libs/axios";
 import { palette } from "styles/theme";
 import Swal from "sweetalert2";
 import { setCookie } from "utils/cookie/universal-cookie";
