@@ -12,7 +12,8 @@ type validType =
   | "username"
   | "password"
   | "passwordConfirm"
-  | "phone";
+  | "phone"
+  | "blog_id";
 
 interface ValidInputTextProps extends InputProps {
   validType: validType;
