@@ -6,6 +6,7 @@ const API_Path = {
   LOGIN: "accounts/login/",
   LOGOUT: "accounts/logout/",
   REFRESH_TOKEN: "accounts/auth/token/refresh/",
+  USER_INFO: "accounts/user/",
 };
 
 Object.freeze(API_Path);
