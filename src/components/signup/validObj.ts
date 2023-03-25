@@ -28,11 +28,16 @@ const validObj: validObjProps = {
     isTest: false,
     value: "",
   },
-  // phone: {
-  //   regexp: /01[016789]-[^0][0-9]{2,3}-[0-9]{4}/, // 휴대폰 번호 양식
-  //   isTest: false,
-  //   value: "",
-  // },
+  phone: {
+    regexp: /01[016789]-[^0][0-9]{2,3}-[0-9]{4}/, // 휴대폰 번호 양식
+    isTest: false,
+    value: "",
+  },
+  blog_id: {
+    regexp: /^[a-z]+[a-z0-9]{5,19}$/, // 영문자로 시작하고 영문자 또는 숫자 6 ~ 20
+    isTest: false,
+    value: "",
+  },
 };
 
 export default validObj;

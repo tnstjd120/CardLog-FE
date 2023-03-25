@@ -5,7 +5,7 @@ import InputText from "components/common/Input/InputText";
 import MobileBottomButton from "components/common/Button/MobileBottomButton";
 import ButtonGroup from "./ButtonGroup";
 import { LoginResponse } from "types/Login";
-import api from "libs/axios";
+import { api } from "libs/axios";
 import API_Path from "utils/path/API_Path";
 import Swal from "sweetalert2";
 import { palette } from "styles/theme";

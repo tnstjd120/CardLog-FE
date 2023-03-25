@@ -4,7 +4,7 @@ import AgreeStep from "./AgreeStep";
 import SecondStep from "./UserInfoStep";
 import FinishStep from "./FinishStep";
 import Pagination from "./Pagination";
-import api from "libs/axios";
+import { api } from "libs/axios";
 import API_Path from "utils/path/API_Path";
 
 export interface SignUpInfoProps {
@@ -12,6 +12,8 @@ export interface SignUpInfoProps {
   username: string;
   password1: string;
   password2: string;
+  phone: string;
+  blog_id: string;
 }
 
 const SignUpForm = () => {

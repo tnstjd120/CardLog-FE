@@ -8,12 +8,13 @@ import { ThemeProvider } from "@emotion/react";
 import theme from "styles/theme";
 import { Provider } from "react-redux";
 import { store } from "store";
+import { checkAccess } from "auth/jwtAuth";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-console.log("index.tsx");
+checkAccess();
 
 root.render(
   <Provider store={store}>

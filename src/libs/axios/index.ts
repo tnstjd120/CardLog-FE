@@ -1,7 +1,9 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { getCookie } from "utils/cookie/universal-cookie";
 
-const api = axios.create({
+const accessToken = getCookie("access");
+
+export const api = axios.create({
   baseURL: "http://localhost:8000/",
   withCredentials: true,
   headers: {
@@ -9,10 +11,17 @@ const api = axios.create({
   },
 });
 
-// api.interceptors.request.use((config: any) => {
-//   const accessToken = useSelector((state) => state);
+const accessApi = axios.create({
+  baseURL: "http://localhost:8000/",
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${accessToken}`,
+  },
+});
 
-//   console.log(accessToken);
+// accessApi.interceptors.request.use((config: any) => {
+//   const accessToken = getCookie("access");
 
 //   return {
 //     ...config,
@@ -22,4 +31,4 @@ const api = axios.create({
 //   };
 // });
 
-export default api;
+export default accessApi;

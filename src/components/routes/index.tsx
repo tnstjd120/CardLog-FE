@@ -2,8 +2,10 @@ import { Route, Routes } from "react-router-dom";
 import RouterInfo, { RouterItem } from "./RouterInfo";
 import PrivateRoute from "./PrivateRouter";
 import React from "react";
+import { checkAccess } from "auth/jwtAuth";
 
 const RoutesObject = (): JSX.Element => {
+  // checkAccess();
   return (
     <Routes>
       {Object.entries(RouterInfo).map(([key, item]: [string, RouterItem]) => {
