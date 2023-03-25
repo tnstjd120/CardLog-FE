@@ -2,22 +2,22 @@
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface UserState {
+export interface UserState {
   id: number | null;
-  name: string | null;
+  username: string | null;
   email: string | null;
-  profileImg: string | null;
+  profile_img: string | null;
   about: string | null;
-  blogName: string | null;
+  blog_name: string | null;
 }
 
 const initialState: UserState = {
   id: null,
-  name: null,
+  username: null,
   email: null,
-  profileImg: null,
+  profile_img: null,
   about: null,
-  blogName: null,
+  blog_name: null,
 };
 
 const userSlice = createSlice({
@@ -26,19 +26,19 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<UserState>) => {
       state.id = action.payload.id;
-      state.name = action.payload.name;
+      state.username = action.payload.username;
       state.email = action.payload.email;
-      state.profileImg = action.payload.profileImg;
+      state.profile_img = action.payload.profile_img;
       state.about = action.payload.about;
-      state.blogName = action.payload.blogName;
+      state.blog_name = action.payload.blog_name;
     },
     clearUser: (state) => {
       state.id = null;
-      state.name = null;
+      state.username = null;
       state.email = null;
-      state.profileImg = null;
+      state.profile_img = null;
       state.about = null;
-      state.blogName = null;
+      state.blog_name = null;
     },
   },
 });
