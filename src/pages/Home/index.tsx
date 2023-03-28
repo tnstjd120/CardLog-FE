@@ -4,85 +4,31 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { GetPostResponse } from "../../types/Post";
-
-const postItemStyles = css`
-  padding: 20px;
-  border-top: 1px solid #ddd;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #eee;
-  }
-
-  h2 {
-    padding-bottom: 10px;
-  }
-
-  p {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-  }
-`;
+import { useSelector } from "react-redux";
+import { RootState } from "store";
+import { UserState } from "store/user";
+import { homeStyles } from "styles/pages/Home";
+import Button from "components/common/Button";
+import { AiOutlinePlus } from "react-icons/ai";
+import HomeDashedButton from "components/common/Button/HomeDashedButton";
+import ToggleLamp from "components/common/lamp";
+import TodayBox from "components/common/TodayBox";
+import { IoIosArrowDropright, IoIosArrowDropleft } from "react-icons/io";
+import CardWrapper from "components/home/CardWrapper";
 
 const Home = () => {
-  const navigate = useNavigate();
-
-  const [postList, setPostList] = useState<GetPostResponse[]>([
-    {
-      id: 0,
-      title: "",
-      content: "",
-      update_at: "",
-    },
-  ]);
-
-  // useEffect(() => {
-  //   getPosts();
-  // }, []);
-
-  // const getPosts = () => {
-  //   axios
-  //     .get("http://localhost:8000/cards", {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //     .then((res) => {
-  //       setPostList(res.data);
-  //       console.log(res.data);
-  //     })
-  //     .catch((error) => console.log(error));
-  // };
+  const user = useSelector<RootState>((state) => state.user) as UserState;
 
   return (
-    <div>
-      <h2
-        css={css`
-          margin-bottom: 30px;
-        `}
-      >
-        Home
-      </h2>
+    <section css={homeStyles}>
+      <ToggleLamp />
 
-      <ul>
-        {postList.map((post) => (
-          <li
-            key={post.id}
-            css={postItemStyles}
-            onClick={() => {
-              navigate(`/posts/${post.id}`);
-            }}
-          >
-            <h2>{post.title}</h2>
+      <pre>{user.about}</pre>
 
-            <p>{post.content}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+      <CardWrapper />
+
+      <TodayBox />
+    </section>
   );
 };
 
