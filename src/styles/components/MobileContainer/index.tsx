@@ -2,12 +2,18 @@ import { css } from "@emotion/react";
 import { palette } from "styles/theme";
 
 export const mobileContainerStyles = css`
-  width: 100%;
+  position: fixed;
+  background-color: ${palette.white};
+  z-index: 10;
+  width: 100vw;
   height: 100vh;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -5vh;
 
   .inner {
     background-color: ${palette.gray2};
-    height: 100vh;
+    height: 100%;
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
