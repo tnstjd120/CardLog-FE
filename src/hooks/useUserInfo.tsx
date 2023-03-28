@@ -1,6 +1,6 @@
 import axios from "axios";
-import { api } from "libs/axios";
-import { useState, useEffect } from "react";
+import { accessApi, api } from "libs/axios";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { setUser } from "store/user";
@@ -13,18 +13,27 @@ export const useUserInfo = async () => {
 
   const { search } = useLocation();
   const params = new URLSearchParams(search);
-  console.log(params.get("email"));
+  const blogId = params.get("blog_id");
 
-  // await axios
-  //   .get(`${API_Path.USER_INFO}${params.get("email")}`, {
-  //     baseURL: "http://localhost:8000/",
-  //     withCredentials: false,
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //   .then((res) => {
-  //     dispatch(setUser(res.data));
-  //   })
-  //   .catch((error) => console.log(error));
+  console.log(blogId);
+
+  blogId
+    ? await api
+        .get(`${API_Path.USER_INFO}${params.get("blog_id")}/`)
+        .then((res) => {
+          console.log("with blogId ", res);
+          dispatch(setUser(res.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    : await accessApi
+        .get(`${API_Path.USER_INFO}`)
+        .then((res) => {
+          console.log("unwith blogId ", res);
+          dispatch(setUser(res.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 };
