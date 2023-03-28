@@ -1,26 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
-import { loginFormStyle } from "styles/components/login";
 import InputText from "components/common/Input/InputText";
 import MobileBottomButton from "components/common/Button/MobileBottomButton";
 import ButtonGroup from "./ButtonGroup";
-import { LoginResponse } from "types/Login";
-import { api } from "libs/axios";
 import API_Path from "utils/path/API_Path";
-import Swal from "sweetalert2";
-import { palette } from "styles/theme";
+import RouterInfo from "components/routes/RouterInfo";
+import { useState } from "react";
+import { loginFormStyle } from "styles/components/login";
+import { accessApi } from "libs/axios";
 import { RootState } from "store";
 import { useSelector, useDispatch } from "react-redux";
-import { setMyInfo } from "store/myInfo";
-import { useCookies } from "react-cookie";
-import axios from "axios";
+import { MyInfoState, setMyInfo } from "store/myInfo";
 import { login } from "auth/jwtAuth";
 import { getCookie } from "utils/cookie/universal-cookie";
 import { useNavigate } from "react-router-dom";
-import RouterInfo from "components/routes/RouterInfo";
 
 const LoginForm = () => {
-  const user = useSelector((state: RootState) => state.myInfo);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -35,9 +29,18 @@ const LoginForm = () => {
       password: formData.get("password") as string,
     };
 
-    await login(reqData);
+    const loginResponse = await login(reqData);
 
-    if (getCookie("access")) navigate(RouterInfo.HOME.path, { replace: true });
+    if (loginResponse === "OK") {
+      await accessApi
+        .get(API_Path.USER_INFO)
+        .then((res) => {
+          dispatch(setMyInfo(res.data));
+        })
+        .catch((error) => console.log(error));
+
+      navigate(RouterInfo.HOME.path, { replace: true });
+    }
   };
 
   return (
