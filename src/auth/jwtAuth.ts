@@ -1,4 +1,3 @@
-import axios from "axios";
 import { api } from "libs/axios";
 import Swal from "sweetalert2";
 import API_Path from "utils/path/API_Path";
@@ -6,8 +5,6 @@ import jwt_decode from "jwt-decode";
 import RouterInfo from "components/routes/RouterInfo";
 import { palette } from "styles/theme";
 import { getCookie } from "utils/cookie/universal-cookie";
-import { useDispatch } from "react-redux";
-import { setUser } from "store/user";
 
 let loginInterval: NodeJS.Timer | null = null;
 
@@ -17,20 +14,28 @@ interface LoginProps {
 }
 
 export const login = async (data: LoginProps) => {
+  let statusText: string = "Bad Request..";
+
   await api
     .post(API_Path.LOGIN, data)
     .then((res) => {
       checkAccess();
+      statusText = res.statusText;
     })
     .catch((error) => {
+      statusText = error.response.statusText;
       Swal.fire({
         icon: "error",
-        text: "로그인에 실패하였습니다.",
+        html: `
+          <h4>로그인 실패</h4>
+        `,
         confirmButtonColor: palette.black4,
         confirmButtonText: "확인",
         focusConfirm: true,
       });
     });
+
+  return statusText;
 };
 
 export const reissueAccess = async () => {
@@ -45,8 +50,10 @@ export const reissueAccess = async () => {
       .catch((error) => {
         console.log(error);
       });
-  } else {
-    return (window.location.href = RouterInfo.LOGIN.path);
+  } else if (!window.location.pathname.includes(RouterInfo.LOGIN.path)) {
+    const params = new URLSearchParams(window.location.search);
+
+    if (!params.get("blog_id")) window.location.href = RouterInfo.LOGIN.path;
   }
 };
 

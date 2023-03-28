@@ -4,11 +4,17 @@ export type ThemeType = "light" | "dark";
 
 declare module "@emotion/react" {
   export interface Theme {
-    [key in ThemeType]: {
+    light: {
       backgroundColor: string;
-      // hoverBackgroundColor: string;
+      hoverBackgroundColor: string;
       color: string;
-      // hoverColor: string;
+      hoverColor: string;
+    };
+    dark: {
+      backgroundColor: string;
+      hoverBackgroundColor: string;
+      color: string;
+      hoverColor: string;
     };
   }
 }

@@ -1,5 +1,9 @@
+const params = new URLSearchParams(window.location.search);
+
+const blogIdQuery = `?blog_id=${params.get("blog_id")}`;
+
 const API_Path = {
-  API_CARDS: "cards/",
+  POSTS: `posts/${blogIdQuery}`,
 
   // Accounts
   SIGNUP: "accounts/register/",

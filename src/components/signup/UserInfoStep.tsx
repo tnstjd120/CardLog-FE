@@ -1,12 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { Dispatch } from "react";
-import { SignUpInfoProps } from ".";
 import MobileBottomButton from "components/common/Button/MobileBottomButton";
 import ValidInputText from "components/common/Input/ValidInputText";
 import validObj from "./validObj";
 import Swal from "sweetalert2";
+import API_Path from "utils/path/API_Path";
+import { Dispatch } from "react";
+import { SignUpInfoProps } from ".";
 import { palette } from "styles/theme";
 import { UserInfoStepStyles } from "styles/components/signup";
+import { api } from "libs/axios";
 
 interface UserInfoStepProps {
   setSignUpStep: Dispatch<React.SetStateAction<number>>;
@@ -14,11 +16,12 @@ interface UserInfoStepProps {
 }
 
 const UserInfoStep = ({ setSignUpStep, setSignUpInfo }: UserInfoStepProps) => {
-  const handleUserInfoStepClick = (
+  const handleSignUp = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
 
+    // 클라이언트에서 유효성 검증
     for (let [key, item] of Object.entries(validObj)) {
       if (!item.isTest) {
         return Swal.fire({
@@ -31,16 +34,37 @@ const UserInfoStep = ({ setSignUpStep, setSignUpInfo }: UserInfoStepProps) => {
       }
     }
 
-    setSignUpInfo({
-      email: validObj.email.value,
-      username: validObj.username.value,
-      password1: validObj.password.value,
-      password2: validObj.passwordConfirm.value,
-      phone: validObj.phone.value,
-      blog_id: validObj.blog_id.value,
-    });
+    // 서버에서 유효성 검증 및 회원가입
+    await api
+      .post(API_Path.SIGNUP, {
+        email: validObj.email.value,
+        username: validObj.username.value,
+        password1: validObj.password.value,
+        password2: validObj.passwordConfirm.value,
+        phone: validObj.phone.value,
+        blog_id: validObj.blog_id.value,
+      })
+      .then((res) => setSignUpStep((prev) => prev + 1))
+      .catch((error) => {
+        let errorMessage = error;
 
-    setSignUpStep((prev) => prev + 1);
+        for (let [key, value] of Object.entries(error.response.data)) {
+          errorMessage = value;
+          validObj[key].isTest = false;
+          break;
+        }
+
+        Swal.fire({
+          icon: "error",
+          html: `
+            <h4>회원가입 실패</h4>
+            <p>${errorMessage}</p>
+          `,
+          confirmButtonColor: palette.black4,
+          confirmButtonText: "확인",
+          focusConfirm: true,
+        });
+      });
   };
 
   return (
@@ -105,7 +129,7 @@ const UserInfoStep = ({ setSignUpStep, setSignUpInfo }: UserInfoStepProps) => {
         validObj={validObj}
       />
 
-      <MobileBottomButton onClick={(e) => handleUserInfoStepClick(e)}>
+      <MobileBottomButton onClick={(e) => handleSignUp(e)}>
         다음
       </MobileBottomButton>
     </form>

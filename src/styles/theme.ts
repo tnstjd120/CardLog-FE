@@ -27,11 +27,15 @@ export const palette = {
 const theme = {
   light: {
     backgroundColor: palette.white,
-    color: palette.black1,
+    hoverBackgroundColor: palette.gray2,
+    color: palette.black3,
+    hoverColor: palette.black1,
   },
   dark: {
     backgroundColor: palette.black1,
+    hoverBackgroundColor: palette.black3,
     color: palette.white,
+    hoverColor: palette.gray2,
   },
 };
 

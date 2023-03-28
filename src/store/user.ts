@@ -1,23 +1,33 @@
 // get으로 받아온 유저 정보
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  CategoryResponseProps,
+  LinkListResponseProps,
+  PostResponseProps,
+  UserResponseProps,
+} from "types/user/User";
 
-export interface UserState {
-  id: number | null;
-  username: string | null;
-  email: string | null;
-  profile_img: string | null;
-  about: string | null;
-  blog_name: string | null;
+export interface UserState extends UserResponseProps {
+  category: CategoryResponseProps[];
+  link_list: LinkListResponseProps[];
+  post: PostResponseProps[];
 }
 
 const initialState: UserState = {
-  id: null,
-  username: null,
-  email: null,
-  profile_img: null,
-  about: null,
-  blog_name: null,
+  id: 0,
+  username: "",
+  email: "",
+  profile_img: "",
+  about: "",
+  phone: "",
+  blog_name: "",
+  blog_id: "",
+  update_at: "",
+  create_at: "",
+  category: [],
+  link_list: [],
+  post: [],
 };
 
 const userSlice = createSlice({
@@ -30,19 +40,18 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.profile_img = action.payload.profile_img;
       state.about = action.payload.about;
+      state.phone = action.payload.phone;
+      state.blog_id = action.payload.blog_id;
       state.blog_name = action.payload.blog_name;
-    },
-    clearUser: (state) => {
-      state.id = null;
-      state.username = null;
-      state.email = null;
-      state.profile_img = null;
-      state.about = null;
-      state.blog_name = null;
+      state.update_at = action.payload.update_at;
+      state.create_at = action.payload.create_at;
+      state.category = action.payload.category;
+      state.link_list = action.payload.link_list;
+      state.post = action.payload.post;
     },
   },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
+export const { setUser } = userSlice.actions;
 
 export default userSlice.reducer;

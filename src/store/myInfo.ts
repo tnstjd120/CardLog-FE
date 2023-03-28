@@ -1,25 +1,23 @@
-// get으로 받아온 유저 정보
-
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface MyInfoState {
   id: number | null;
-  name: string | null;
+  username: string | null;
   email: string | null;
-  profileImg: string | null;
+  profile_img: string | null;
   about: string | null;
-  blogName: string | null;
-  access_token: string | null;
+  blog_name: string | null;
+  blog_id: string | null;
 }
 
 const initialState: MyInfoState = {
   id: null,
-  name: null,
+  username: null,
   email: null,
-  profileImg: null,
+  profile_img: null,
   about: null,
-  blogName: null,
-  access_token: null,
+  blog_name: null,
+  blog_id: null,
 };
 
 const myInfoSlice = createSlice({
@@ -28,21 +26,20 @@ const myInfoSlice = createSlice({
   reducers: {
     setMyInfo: (state, action: PayloadAction<MyInfoState>) => {
       state.id = action.payload.id;
-      state.name = action.payload.name;
+      state.username = action.payload.username;
       state.email = action.payload.email;
-      state.profileImg = action.payload.profileImg;
+      state.profile_img = action.payload.profile_img;
       state.about = action.payload.about;
-      state.blogName = action.payload.blogName;
-      state.access_token = action.payload.access_token;
+      state.blog_id = action.payload.blog_id;
+      state.blog_name = action.payload.blog_name;
     },
     clearMyInfo: (state) => {
       state.id = null;
-      state.name = null;
+      state.username = null;
       state.email = null;
-      state.profileImg = null;
+      state.profile_img = null;
       state.about = null;
-      state.blogName = null;
-      state.access_token = null;
+      state.blog_name = null;
     },
   },
 });
