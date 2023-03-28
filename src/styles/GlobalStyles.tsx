@@ -40,6 +40,20 @@ export const GlobalStyles: React.FC<ComponentProps<any>> = () => (
       .swal2-styled.swal2-default-outline:focus {
         box-shadow: none;
       }
+      .scrollBar::-webkit-scrollbar {
+        width: 2px; /* 스크롤바의 너비 */
+      }
+
+      .scrollBar::-webkit-scrollbar-thumb {
+        height: 30%; /* 스크롤바의 길이 */
+        background: #555; /* 스크롤바의 색상 */
+
+        border-radius: 6px;
+      }
+
+      .scrollBar::-webkit-scrollbar-track {
+        background: rgba(240, 240, 240, 0.1); /*스크롤바 뒷 배경 색상*/
+      }
     `}
   />
 );
