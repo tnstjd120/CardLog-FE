@@ -10,7 +10,7 @@ const todayStyles = css`
   font-weight: 300;
 
   & > span:first-of-type {
-    margin-right: 30px;
+    margin-right: 20px;
   }
 `;
 

@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import styled from "@emotion/styled";
 import Button, { ButtonProps } from "components/common/Button";
 import HomeDashedButton from "components/common/Button/HomeDashedButton";
 import { useRef } from "react";
@@ -8,6 +9,7 @@ import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "store";
+import { ThemeStateProps } from "store/themeType";
 import { UserState } from "store/user";
 import { cardWrapperStyles } from "styles/components/CardWrapper";
 import { palette } from "styles/theme";
@@ -17,9 +19,10 @@ const CustomButton = (props: ButtonProps) => {
     <Button
       customCss={css`
         background-color: transparent;
+        color: inherit;
         font-size: 2.5em;
         color: ${palette.black4};
-        transition: 0.3s;
+        transition: 0.4s;
 
         &:hover {
           color: ${palette.black1};
@@ -31,6 +34,10 @@ const CustomButton = (props: ButtonProps) => {
 };
 
 const CardWrapper = () => {
+  const { themeType } = useSelector<RootState>(
+    (state) => state.themeType
+  ) as ThemeStateProps;
+
   const navigate = useNavigate();
   const user = useSelector<RootState>((state) => state.user) as UserState;
   const CardsRef = useRef<HTMLUListElement>(null);
@@ -83,3 +90,5 @@ const CardWrapper = () => {
 };
 
 export default CardWrapper;
+
+const CardContainer = styled.div``;

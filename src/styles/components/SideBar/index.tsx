@@ -10,6 +10,8 @@ export const sideBarStyle = css`
   font-weight: 300;
   padding: 20px 0;
   transition: 0.4s;
+  background-color: inherit;
+  color: inherit;
 
   &::after {
     content: "";
@@ -40,7 +42,7 @@ export const sideBarStyle = css`
     text-align: center;
 
     a {
-      color: ${palette.black2};
+      color: inherit;
     }
   }
 
@@ -85,6 +87,7 @@ export const sideBarStyle = css`
       display: block;
       height: 100%;
       padding: 10px 20px;
+      color: inherit;
 
       &:hover {
         background-color: ${palette.gray2};
@@ -97,5 +100,8 @@ export const sideBarStyle = css`
     left: 20px;
     bottom: 0;
     font-size: 2.3em;
+    a {
+      color: inherit;
+    }
   }
 `;

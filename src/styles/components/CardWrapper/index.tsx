@@ -1,10 +1,11 @@
 import { css } from "@emotion/react";
-import { palette } from "styles/theme";
 
 export const cardWrapperStyles = css`
   position: relative;
   margin-top: 100px;
   margin-left: 30px;
+  transition: 0.4s;
+
   & > ul {
     padding: 30px 0;
     padding-right: 80px;
@@ -43,5 +44,9 @@ export const cardWrapperStyles = css`
     position: absolute;
     right: 20px;
     bottom: -60px;
+
+    button {
+      color: inherit;
+    }
   }
 `;

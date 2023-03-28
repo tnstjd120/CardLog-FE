@@ -1,33 +1,18 @@
 /** @jsxImportSource @emotion/react */
-
 import React from "react";
+import RouterInfo from "../../routes/RouterInfo";
 import { sideBarStyle } from "../../../styles/components/SideBar";
 import { Link, NavLink } from "react-router-dom";
-import RouterInfo, { RouterItem } from "../../routes/RouterInfo";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { UserState } from "store/user";
-import { MyInfoState } from "store/myInfo";
 import { FaUserCircle, FaBlogger, FaGithubSquare } from "react-icons/fa";
-import { ThemeStateProps } from "store/themeType";
-import { css, useTheme } from "@emotion/react";
 
 const SideBar: React.FC = (): JSX.Element => {
   const user = useSelector<RootState>((state) => state.user) as UserState;
-  const { themeType } = useSelector<RootState>(
-    (state) => state.themeType
-  ) as ThemeStateProps;
-
-  const theme = useTheme();
 
   return (
-    <article
-      css={css`
-        ${sideBarStyle};
-        background-color: ${theme[themeType].backgroundColor};
-        color: ${theme[themeType].color};
-      `}
-    >
+    <article css={sideBarStyle}>
       <h2>
         <Link to={RouterInfo.HOME.path}>{user.blog_name}</Link>
       </h2>

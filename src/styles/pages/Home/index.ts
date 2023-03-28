@@ -11,6 +11,8 @@ export const homeStyles = css`
   display: flex;
   flex-direction: column;
   font-size: 20px;
+  background-color: inherit;
+  color: inherit;
 
   & > pre {
     width: 100%;

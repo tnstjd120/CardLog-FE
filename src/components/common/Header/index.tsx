@@ -8,10 +8,15 @@ const headerStyles = css`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  position: relative;
+  position: fixed;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: inherit;
+  color: inherit;
 
   .logo {
     width: 36px;
@@ -22,7 +27,7 @@ const headerStyles = css`
     letter-spacing: 1px;
     font-weight: 300;
     span {
-      text-indent: -6px;
+      text-indent: 4px;
     }
   }
 `;

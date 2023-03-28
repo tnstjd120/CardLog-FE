@@ -1,10 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { css, keyframes, useTheme } from "@emotion/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { css, keyframes } from "@emotion/react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store";
 import { setThemeType, ThemeStateProps } from "store/themeType";
-import { ThemeType } from "styles/emotion";
 
 const switchKeyframes = keyframes`
   0% {
@@ -141,16 +140,6 @@ const lampStyles = css`
 `;
 
 const ToggleLamp = () => {
-  // const theme = useTheme();
-
-  // const [themeType, setThemeType] = useState<ThemeType>(
-  //   (localStorage.getItem("themeType") as ThemeType) || "light"
-  // );
-
-  // useEffect(() => {
-  //   localStorage.setItem("themeType", themeType);
-  // }, [themeType]);
-
   const { themeType } = useSelector<RootState>(
     (state) => state.themeType
   ) as ThemeStateProps;
