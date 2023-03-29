@@ -1,19 +1,18 @@
 /** @jsxImportSource @emotion/react */
-import { css, useTheme } from "@emotion/react";
+import { useTheme } from "@emotion/react";
 import { GlobalStyles } from "./styles/GlobalStyles";
 import { useHasNav } from "./hooks/useHasNav";
 import { useLocation } from "react-router-dom";
-
-import SideBar from "./components/common/SideBar";
-import RoutesObject from "./components/routes";
 import { useUserInfo } from "hooks/useUserInfo";
-import { contentStyles, mainStyles } from "styles/AppStyles";
-import Header from "components/common/Header";
-import { useEffect, useState } from "react";
-import { ThemeType } from "styles/emotion";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { ThemeStateProps } from "store/themeType";
+import { emotionStyledProps } from "types/emotionStyled";
+import SideBar from "./components/common/SideBar";
+import RoutesObject from "./components/routes";
+import styled from "@emotion/styled";
+import Header from "components/common/Header";
 
 function App() {
   const { themeType } = useSelector<RootState>(
@@ -27,28 +26,61 @@ function App() {
   const { pathname } = useLocation();
   const theme = useTheme();
 
+  const bgColor = theme[themeType].backgroundColor;
+  const textColor = theme[themeType].color;
+  const boxShadow = theme[themeType].boxShadow;
+
   useUserInfo();
 
   return (
     <>
       <GlobalStyles />
 
-      <Header />
+      <Wrap backgroundColor={bgColor} color={textColor}>
+        {useHasNav(pathname) && <Header />}
 
-      <main css={mainStyles}>
-        {useHasNav(pathname) && <SideBar />}
-        <div
-          css={css`
-            ${contentStyles};
-            background-color: ${theme[themeType].backgroundColor};
-            color: ${theme[themeType].color};
-          `}
-        >
-          {RoutesObject()}
-        </div>
-      </main>
+        <Main boxShadow={boxShadow}>
+          {useHasNav(pathname) && <SideBar />}
+
+          <Content>{RoutesObject()}</Content>
+        </Main>
+      </Wrap>
     </>
   );
 }
 
 export default App;
+
+const Wrap = styled.div<emotionStyledProps>`
+  background-color: ${(props) => props.backgroundColor};
+  color: ${(props) => props.color};
+  width: 100%;
+  height: 100vh;
+  padding-top: 5vh;
+  transition: 0.4s;
+`;
+
+const Main = styled.main<emotionStyledProps>`
+  box-shadow: ${(props) => props.boxShadow};
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  height: 90%;
+  margin: 0 auto;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 6px;
+  /* box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1); */
+`;
+
+const Content = styled.div`
+  background-color: inherit;
+  color: inherit;
+  height: 100%;
+  width: calc(100% - 200px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: all 0.4s;
+`;

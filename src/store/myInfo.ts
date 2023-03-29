@@ -1,23 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { UserResponseProps } from "types/User";
 
-export interface MyInfoState {
-  id: number | null;
-  username: string | null;
-  email: string | null;
-  profile_img: string | null;
-  about: string | null;
-  blog_name: string | null;
-  blog_id: string | null;
-}
+export interface MyInfoState extends UserResponseProps {}
 
 const initialState: MyInfoState = {
-  id: null,
-  username: null,
-  email: null,
-  profile_img: null,
-  about: null,
-  blog_name: null,
-  blog_id: null,
+  id: 0,
+  username: "",
+  email: "",
+  profile_img: "",
+  about: "",
+  phone: "",
+  blog_name: "",
+  blog_id: "",
+  github_url: "",
+  blog_url: "",
+  update_at: "",
+  create_at: "",
 };
 
 const myInfoSlice = createSlice({
@@ -30,20 +28,17 @@ const myInfoSlice = createSlice({
       state.email = action.payload.email;
       state.profile_img = action.payload.profile_img;
       state.about = action.payload.about;
+      state.phone = action.payload.phone;
       state.blog_id = action.payload.blog_id;
       state.blog_name = action.payload.blog_name;
-    },
-    clearMyInfo: (state) => {
-      state.id = null;
-      state.username = null;
-      state.email = null;
-      state.profile_img = null;
-      state.about = null;
-      state.blog_name = null;
+      state.github_url = action.payload.github_url;
+      state.blog_url = action.payload.blog_url;
+      state.update_at = action.payload.update_at;
+      state.create_at = action.payload.create_at;
     },
   },
 });
 
-export const { setMyInfo, clearMyInfo } = myInfoSlice.actions;
+export const { setMyInfo } = myInfoSlice.actions;
 
 export default myInfoSlice.reducer;

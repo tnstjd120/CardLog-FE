@@ -1,39 +1,46 @@
-import axios from "axios";
+import RouterInfo from "components/routes/RouterInfo";
+import API_Path from "utils/path/API_Path";
 import { accessApi, api } from "libs/axios";
-import { useState, useEffect, useLayoutEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { setMyInfo } from "store/myInfo";
 import { setUser } from "store/user";
 import { getCookie } from "utils/cookie/universal-cookie";
-import API_Path from "utils/path/API_Path";
 
 export const useUserInfo = async () => {
-  const accessToken = getCookie("access");
   const dispatch = useDispatch();
+  const refreshToken = getCookie("refresh");
 
-  const { search } = useLocation();
+  const { search, pathname } = useLocation();
   const params = new URLSearchParams(search);
   const blogId = params.get("blog_id");
 
-  console.log(blogId);
+  const pathTypeCheck = async () => {
+    const notAccessPath: string[] = ["/", "/login", "/signup"];
 
-  blogId
-    ? await api
-        .get(`${API_Path.USER_INFO}${params.get("blog_id")}/`)
-        .then((res) => {
-          console.log("with blogId ", res);
-          dispatch(setUser(res.data));
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-    : await accessApi
+    !notAccessPath.includes(pathname)
+      ? await accessApi
+          .get(`${API_Path.USER_INFO}`)
+          .then((res) => {
+            console.log("myinfo => ", res.data);
+            dispatch(setMyInfo(res.data));
+          })
+          .catch((error) => console.log(error))
+      : pathname === "/" && (window.location.href = RouterInfo.Intro.path);
+  };
+
+  const GlobalUserStateSet = async () => {
+    await api
+      .get(`${API_Path.USER_INFO}${params.get("blog_id")}/`)
+      .then((res) => dispatch(setUser(res.data)))
+      .catch((error) => console.log(error));
+
+    refreshToken &&
+      (await accessApi
         .get(`${API_Path.USER_INFO}`)
-        .then((res) => {
-          console.log("unwith blogId ", res);
-          dispatch(setUser(res.data));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        .then((res) => dispatch(setMyInfo(res.data)))
+        .catch((error) => console.log(error)));
+  };
+
+  blogId ? GlobalUserStateSet() : pathTypeCheck();
 };

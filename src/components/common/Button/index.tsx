@@ -6,7 +6,7 @@ import theme from "styles/theme";
 
 export interface ButtonProps {
   themeType?: ThemeType;
-  children?: string | React.ReactElement;
+  children?: string | JSX.Element | any;
   icon?: React.ReactElement;
   type?: "button" | "submit";
   marginRight?: string;

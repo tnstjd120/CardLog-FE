@@ -4,19 +4,15 @@ import MobileBottomButton from "components/common/Button/MobileBottomButton";
 import ButtonGroup from "./ButtonGroup";
 import API_Path from "utils/path/API_Path";
 import RouterInfo from "components/routes/RouterInfo";
-import { useState } from "react";
 import { loginFormStyle } from "styles/components/login";
 import { accessApi } from "libs/axios";
-import { RootState } from "store";
-import { useSelector, useDispatch } from "react-redux";
-import { MyInfoState, setMyInfo } from "store/myInfo";
+import { useDispatch } from "react-redux";
+import { setMyInfo } from "store/myInfo";
 import { login } from "auth/jwtAuth";
-import { getCookie } from "utils/cookie/universal-cookie";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -36,10 +32,11 @@ const LoginForm = () => {
         .get(API_Path.USER_INFO)
         .then((res) => {
           dispatch(setMyInfo(res.data));
+          navigate(`${RouterInfo.HOME.path}?blog_id=${res.data.blog_id}`, {
+            replace: true,
+          });
         })
         .catch((error) => console.log(error));
-
-      navigate(RouterInfo.HOME.path, { replace: true });
     }
   };
 

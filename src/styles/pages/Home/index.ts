@@ -1,5 +1,4 @@
 import { css } from "@emotion/react";
-import { palette } from "styles/theme";
 
 export const homeStyles = css`
   position: relative;
@@ -11,13 +10,14 @@ export const homeStyles = css`
   display: flex;
   flex-direction: column;
   font-size: 20px;
+  background-color: inherit;
+  color: inherit;
 
   & > pre {
     width: 100%;
     max-width: 50%;
-    height: 200px;
     line-height: 1.5;
     font-size: 1em;
-    padding: 30px 0 30px 80px;
+    padding: 30px;
   }
 `;

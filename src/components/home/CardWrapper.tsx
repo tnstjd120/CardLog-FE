@@ -1,36 +1,26 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import Button, { ButtonProps } from "components/common/Button";
-import HomeDashedButton from "components/common/Button/HomeDashedButton";
+import styled from "@emotion/styled";
+import Button from "components/common/Button";
+import { css, useTheme } from "@emotion/react";
 import { useRef } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "store";
+import { ThemeStateProps } from "store/themeType";
 import { UserState } from "store/user";
-import { cardWrapperStyles } from "styles/components/CardWrapper";
 import { palette } from "styles/theme";
-
-const CustomButton = (props: ButtonProps) => {
-  return (
-    <Button
-      customCss={css`
-        background-color: transparent;
-        font-size: 2.5em;
-        color: ${palette.black4};
-        transition: 0.3s;
-
-        &:hover {
-          color: ${palette.black1};
-        }
-      `}
-      {...props}
-    />
-  );
-};
+import { emotionStyledProps } from "types/emotionStyled";
 
 const CardWrapper = () => {
+  const { themeType } = useSelector<RootState>(
+    (state) => state.themeType
+  ) as ThemeStateProps;
+
+  const theme = useTheme();
+  const color = theme[themeType].color;
+
   const navigate = useNavigate();
   const user = useSelector<RootState>((state) => state.user) as UserState;
   const CardsRef = useRef<HTMLUListElement>(null);
@@ -47,11 +37,11 @@ const CardWrapper = () => {
   };
 
   return (
-    <div css={cardWrapperStyles}>
+    <CardWrapperContainer color={color}>
       <ul ref={CardsRef}>
-        <HomeDashedButton>
+        <button type="button">
           <AiOutlinePlus />
-        </HomeDashedButton>
+        </button>
 
         {user.post.map((item) => (
           <li
@@ -70,16 +60,111 @@ const CardWrapper = () => {
       </ul>
 
       <div className="controller">
-        <CustomButton onClick={() => handleScrollLeft("prev")}>
+        <Button onClick={() => handleScrollLeft("prev")}>
           <IoMdArrowDropleft />
-        </CustomButton>
+        </Button>
 
-        <CustomButton onClick={() => handleScrollLeft("next")}>
+        <Button onClick={() => handleScrollLeft("next")}>
           <IoMdArrowDropright />
-        </CustomButton>
+        </Button>
       </div>
-    </div>
+    </CardWrapperContainer>
   );
 };
 
 export default CardWrapper;
+
+const CardWrapperContainer = styled.div<emotionStyledProps>`
+  position: relative;
+  margin-top: 130px;
+  margin-left: 30px;
+  transition: 0.4s;
+
+  & > ul {
+    padding: 30px 0;
+    padding-right: 40px;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: 100%;
+    min-height: 460px;
+
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 30%;
+      background-color: ${(props) => props.color};
+      border-radius: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: ${(props) => props.color}30;
+    }
+
+    & > button[type="button"] {
+      background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='5' ry='5' stroke='%23999999FF' stroke-width='2' stroke-dasharray='8%2c 8' stroke-dashoffset='27' stroke-linecap='round'/%3e%3c/svg%3e");
+      border: none;
+      border-radius: 5px;
+      min-width: 70px;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: transparent;
+      position: sticky;
+      left: 0;
+      top: 30px;
+      color: inherit;
+      cursor: pointer;
+      transition: 0.4s;
+
+      &:hover {
+        background-color: ${(props) => props.color}20;
+      }
+    }
+
+    li {
+      box-shadow: 2px 10px 18px 0 rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 50px;
+      min-width: 280px;
+      height: 400px;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+
+      &:hover {
+        transform: translateY(-5%);
+        box-shadow: 2px 10px 18px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      h3 {
+        font-size: 1em;
+        font-weight: 500;
+      }
+    }
+  }
+
+  & > .controller {
+    display: flex;
+    position: absolute;
+    right: 20px;
+    bottom: -60px;
+
+    button {
+      background-color: transparent;
+      color: inherit;
+      font-size: 2.5em;
+      color: ${palette.black4};
+      transition: 0.4s;
+
+      &:hover {
+        color: ${palette.black1};
+      }
+    }
+  }
+`;

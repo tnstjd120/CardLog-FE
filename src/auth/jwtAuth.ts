@@ -1,4 +1,4 @@
-import { api } from "libs/axios";
+import { accessApi, api } from "libs/axios";
 import Swal from "sweetalert2";
 import API_Path from "utils/path/API_Path";
 import jwt_decode from "jwt-decode";
@@ -80,18 +80,10 @@ export const checkAccess = () => {
   loginInterval = setInterval(reissueAccess, delay - 30000);
 };
 
-// export const loginSuccess = (accessToken: string) => {
-//   // axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-
-//   const decode: any = jwt_decode(accessToken);
-//   const expireTime = decode.exp;
-
-//   const delay = (expireTime - Date.now() / 1000) * 1000;
-
-// };
-
 export const logout = async () => {
   if (loginInterval !== null) clearInterval(loginInterval);
 
-  await api.post(API_Path.LOGOUT);
+  await accessApi
+    .post(API_Path.LOGOUT)
+    .then((res) => (window.location.href = RouterInfo.LOGIN.path));
 };

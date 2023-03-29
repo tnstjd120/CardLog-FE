@@ -1,35 +1,68 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { GetPostResponse } from "../../types/Post";
+import React from "react";
+import ToggleLamp from "components/common/Lamp";
+import TodayBox from "components/common/TodayBox";
+import CardWrapper from "components/home/CardWrapper";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { UserState } from "store/user";
-import { homeStyles } from "styles/pages/Home";
-import Button from "components/common/Button";
-import { AiOutlinePlus } from "react-icons/ai";
-import HomeDashedButton from "components/common/Button/HomeDashedButton";
-import ToggleLamp from "components/common/lamp";
-import TodayBox from "components/common/TodayBox";
-import { IoIosArrowDropright, IoIosArrowDropleft } from "react-icons/io";
-import CardWrapper from "components/home/CardWrapper";
+import styled from "@emotion/styled";
 
 const Home = () => {
   const user = useSelector<RootState>((state) => state.user) as UserState;
 
   return (
-    <section css={homeStyles}>
-      <ToggleLamp />
+    <HomeContainer>
+      <HomeTopArea>
+        <div>
+          <pre>{user.about}</pre>
+        </div>
 
-      <pre>{user.about}</pre>
+        <div>
+          <ToggleLamp />
+        </div>
+      </HomeTopArea>
 
       <CardWrapper />
 
       <TodayBox />
-    </section>
+    </HomeContainer>
   );
 };
 
 export default Home;
+
+const HomeContainer = styled.section`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  background-color: inherit;
+  color: inherit;
+`;
+
+const HomeTopArea = styled.div`
+  display: flex;
+
+  & > div {
+    width: 50%;
+    position: relative;
+  }
+
+  & > div:first-of-type {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+  }
+
+  pre {
+    line-height: 1.5;
+    font-size: 1em;
+    font-weight: 400;
+  }
+`;

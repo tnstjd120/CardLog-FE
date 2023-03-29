@@ -1,16 +1,12 @@
 // get으로 받아온 유저 정보
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  CategoryResponseProps,
-  LinkListResponseProps,
-  PostResponseProps,
-  UserResponseProps,
-} from "types/user/User";
+import { CategoryResponseProps } from "types/Category";
+import { PostResponseProps } from "types/Post";
+import { UserResponseProps } from "types/User";
 
 export interface UserState extends UserResponseProps {
   category: CategoryResponseProps[];
-  link_list: LinkListResponseProps[];
   post: PostResponseProps[];
 }
 
@@ -23,10 +19,11 @@ const initialState: UserState = {
   phone: "",
   blog_name: "",
   blog_id: "",
+  github_url: "",
+  blog_url: "",
   update_at: "",
   create_at: "",
   category: [],
-  link_list: [],
   post: [],
 };
 
@@ -43,10 +40,11 @@ const userSlice = createSlice({
       state.phone = action.payload.phone;
       state.blog_id = action.payload.blog_id;
       state.blog_name = action.payload.blog_name;
+      state.github_url = action.payload.github_url;
+      state.blog_url = action.payload.blog_url;
       state.update_at = action.payload.update_at;
       state.create_at = action.payload.create_at;
       state.category = action.payload.category;
-      state.link_list = action.payload.link_list;
       state.post = action.payload.post;
     },
   },
