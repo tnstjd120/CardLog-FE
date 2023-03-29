@@ -4,8 +4,6 @@ import { palette } from "styles/theme";
 import Button, { ButtonProps } from "components/common/Button";
 import { useNavigate } from "react-router-dom";
 import RouterInfo from "components/routes/RouterInfo";
-import { api } from "libs/axios";
-import API_Path from "utils/path/API_Path";
 import { logout } from "auth/jwtAuth";
 
 const ButtonGroup = () => {

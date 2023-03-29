@@ -9,7 +9,7 @@ import { palette } from "styles/theme";
 
 interface MobileContainerProps {
   title: string;
-  caption: React.ReactElement;
+  caption?: React.ReactElement;
   children: React.ReactNode;
 }
 
@@ -49,11 +49,13 @@ const MobileContainer: React.FC<MobileContainerProps> = ({
         </div>
 
         <div className="content">
-          <figure className="logo">
-            <img src="assets/logo.svg" alt="CardLog Logo" />
+          {caption && (
+            <figure className="logo">
+              <img src="assets/logo.svg" alt="CardLog Logo" />
 
-            <figcaption>{caption}</figcaption>
-          </figure>
+              <figcaption>{caption}</figcaption>
+            </figure>
+          )}
 
           {children}
         </div>

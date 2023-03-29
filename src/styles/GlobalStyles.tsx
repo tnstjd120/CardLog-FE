@@ -54,6 +54,10 @@ export const GlobalStyles: React.FC<ComponentProps<any>> = () => (
       .scrollBar::-webkit-scrollbar-track {
         background: rgba(240, 240, 240, 0.1); /*스크롤바 뒷 배경 색상*/
       }
+
+      .scroll::-webkit-scrollbar {
+        display: none;
+      }
     `}
   />
 );

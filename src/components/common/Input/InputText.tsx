@@ -8,6 +8,8 @@ import theme from "styles/theme";
 export interface InputProps {
   themeType?: ThemeType;
   value?: string;
+  defaultValue?: string;
+  disabled?: boolean;
   ref?: React.RefObject<HTMLInputElement>;
   marginBottom?: string;
   type?: string;
@@ -26,11 +28,13 @@ const InputText = React.forwardRef<HTMLInputElement, InputProps>(
     {
       themeType = "light",
       value,
+      defaultValue,
       name,
       required = false,
       maxLength,
       marginBottom = "20px",
       type = "text",
+      disabled = false,
       size = "md",
       placeholder = "",
       customCss = "",
@@ -65,7 +69,9 @@ const InputText = React.forwardRef<HTMLInputElement, InputProps>(
           css={inputStyle}
           placeholder={placeholder}
           value={value}
+          defaultValue={defaultValue}
           required={required}
+          disabled={disabled}
           maxLength={maxLength}
           onChange={onChange}
           onBlur={onBlur}

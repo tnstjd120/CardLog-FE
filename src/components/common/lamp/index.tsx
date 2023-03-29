@@ -20,7 +20,8 @@ const switchKeyframes = keyframes`
 const lampStyles = css`
   position: absolute;
   top: 0;
-  right: 140px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -139,7 +140,7 @@ const lampStyles = css`
   }
 `;
 
-const ToggleLamp = () => {
+const Lamp = () => {
   const { themeType } = useSelector<RootState>(
     (state) => state.themeType
   ) as ThemeStateProps;
@@ -171,4 +172,4 @@ const ToggleLamp = () => {
   );
 };
 
-export default ToggleLamp;
+export default Lamp;

@@ -28,6 +28,7 @@ function App() {
 
   const bgColor = theme[themeType].backgroundColor;
   const textColor = theme[themeType].color;
+  const boxShadow = theme[themeType].boxShadow;
 
   useUserInfo();
 
@@ -36,9 +37,9 @@ function App() {
       <GlobalStyles />
 
       <Wrap backgroundColor={bgColor} color={textColor}>
-        <Header />
+        {useHasNav(pathname) && <Header />}
 
-        <Main>
+        <Main boxShadow={boxShadow}>
           {useHasNav(pathname) && <SideBar />}
 
           <Content>{RoutesObject()}</Content>
@@ -59,7 +60,8 @@ const Wrap = styled.div<emotionStyledProps>`
   transition: 0.4s;
 `;
 
-const Main = styled.main`
+const Main = styled.main<emotionStyledProps>`
+  box-shadow: ${(props) => props.boxShadow};
   display: flex;
   width: 100%;
   max-width: 1200px;
@@ -69,8 +71,8 @@ const Main = styled.main`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 14px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  /* box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1); */
 `;
 
 const Content = styled.div`

@@ -9,12 +9,14 @@ declare module "@emotion/react" {
       hoverBackgroundColor: string;
       color: string;
       hoverColor: string;
+      boxShadow: string;
     };
     dark: {
       backgroundColor: string;
       hoverBackgroundColor: string;
       color: string;
       hoverColor: string;
+      boxShadow: string;
     };
   }
 }
