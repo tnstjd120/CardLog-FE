@@ -9,6 +9,11 @@ import { useTheme } from "@emotion/react";
 import { emotionStyledProps } from "types/emotionStyled";
 import PostList from "components/posts/PostList";
 import PostDetail from "components/posts/PostDetail";
+import Loading from "components/common/Loading";
+
+interface postsEmotionStyledProps extends emotionStyledProps {
+  postId?: number;
+}
 
 const Posts = () => {
   const { themeType } = useSelector<RootState>(
@@ -22,12 +27,10 @@ const Posts = () => {
 
   return (
     <PostsWrap>
-      <PostsContainer color={color}>
-        {!postId ? (
-          <PostList postId={postId} setPostId={setPostId} />
-        ) : (
-          <PostDetail postId={postId} setPostId={setPostId} />
-        )}
+      <PostsContainer color={color} postId={postId}>
+        <PostList postId={postId} setPostId={setPostId} />
+
+        {!!postId && <PostDetail postId={postId} setPostId={setPostId} />}
       </PostsContainer>
 
       <RightArea>
@@ -79,10 +82,10 @@ const RightArea = styled.div`
   }
 `;
 
-const PostsContainer = styled.div<emotionStyledProps>`
+const PostsContainer = styled.div<postsEmotionStyledProps>`
   width: 60%;
   height: 100%;
-  overflow-y: auto;
+  overflow: ${(props) => (props.postId ? "hidden" : "auto")};
 
   &::-webkit-scrollbar {
     width: 6px;

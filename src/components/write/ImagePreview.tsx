@@ -8,8 +8,13 @@ import { palette } from "styles/theme";
 interface ImageUploadFormProps {
   imageObj: ImageObjProps | undefined;
   setImageObj: React.Dispatch<SetStateAction<ImageObjProps | undefined>>;
+  postId: string | null;
 }
-const ImageUploadForm = ({ imageObj, setImageObj }: ImageUploadFormProps) => {
+const ImageUploadForm = ({
+  imageObj,
+  setImageObj,
+  postId,
+}: ImageUploadFormProps) => {
   const imageRef = useRef<HTMLInputElement | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

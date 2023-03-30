@@ -19,10 +19,17 @@ import CheckBox from "components/common/CheckBox";
 import ImageUploadForm from "components/write/ImagePreview";
 import { MyInfoState } from "store/myInfo";
 import { CategoryResponseProps } from "types/Category";
-import { api } from "libs/axios";
+import { accessApi, api } from "libs/axios";
 import API_Path from "utils/path/API_Path";
 import Swal from "sweetalert2";
 import { palette } from "styles/theme";
+import Loading from "components/common/Loading";
+import { useLocation, useNavigate } from "react-router-dom";
+import RouterInfo from "components/routes/RouterInfo";
+import { getCookie } from "utils/cookie/universal-cookie";
+import { PostDetailResponseProps } from "types/Post";
+import { FaArrowLeft, FaChevronLeft } from "react-icons/fa";
+import { BsFillArrowLeftSquareFill } from "react-icons/bs";
 
 export interface ImageObjProps {
   preview: string | undefined;
@@ -39,14 +46,47 @@ const Write = () => {
   const backgroundColor = theme[themeType].backgroundColor;
 
   const myInfo = useSelector<RootState>((state) => state.myInfo) as MyInfoState;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const postId = new URLSearchParams(location.search).get("post_id");
 
   const [imageObj, setImageObj] = useState<ImageObjProps | undefined>(
     undefined
   );
-
+  const [post, setPost] = useState<PostDetailResponseProps | null>(null);
   const [categorys, setCategorys] = useState<CategoryResponseProps[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const editorRef = useRef<any>();
+  const selectCategoryRef = useRef<HTMLSelectElement | null>(null);
+  const titleRef = useRef<HTMLInputElement | null>(null);
+  const cardTypeRef = useRef<HTMLInputElement | null>(null);
+  const cardBgColorRef = useRef<HTMLInputElement | null>(null);
+  const cardTextColorRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
+    if (postId) {
+      setIsLoading(true);
+
+      const formData = new FormData();
+      formData.append("post_id", postId);
+
+      accessApi
+        .get(`${API_Path.POSTS}${postId}`)
+        .then((res) => {
+          console.log(res.data);
+          setPost(res.data);
+          setImageObj({
+            preview: `https://cardlog-bucket.s3.amazonaws.com/${res.data.thumbnail}`,
+            imageFile: undefined,
+          });
+        })
+        .catch((error) => console.log(error))
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+
     myInfo.id &&
       api
         .get(`${API_Path.CATEGORYS}${myInfo.id}/`)
@@ -55,13 +95,6 @@ const Write = () => {
         })
         .catch((error) => console.log(error));
   }, [myInfo]);
-
-  const editorRef = useRef<any>();
-  const selectCategoryRef = useRef<HTMLSelectElement | null>(null);
-  const titleRef = useRef<HTMLInputElement | null>(null);
-  const cardTypeRef = useRef<HTMLInputElement | null>(null);
-  const cardBgColorRef = useRef<HTMLInputElement | null>(null);
-  const cardTextColorRef = useRef<HTMLInputElement | null>(null);
 
   const errorAlert = (text: string) => {
     Swal.fire({
@@ -125,78 +158,120 @@ const Write = () => {
       formData.append("bg_color", cardBgColor);
       formData.append("text_color", cardTextColor);
     }
-    console.log(formData.get("thumbnail"));
+
+    if (postId) formData.append("post_id", postId);
 
     await api
-      .post(`${API_Path.POST_CREATE}?host_id=thumbnail`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      .post(
+        `${
+          postId ? API_Path.POST_UPDATE : API_Path.POST_CREATE
+        }?host_id=thumbnail`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
       .then((res) => console.log(res))
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => {
+        navigate(
+          `${RouterInfo.POST_LIST.path}?blog_id=${myInfo.blog_id}&category=${categorys[0].id}`
+        );
+      });
   };
 
-  return (
-    <WriteContainer color={color} backgroundColor={backgroundColor}>
-      <PostSettingHeader>
-        <ImageUploadForm imageObj={imageObj} setImageObj={setImageObj} />
+  if (isLoading) {
+    return <Loading />;
+  } else {
+    return (
+      <WriteContainer color={color} backgroundColor={backgroundColor}>
+        <GoBackButton onClick={() => navigate(-1)}>
+          <FaArrowLeft />
+        </GoBackButton>
 
-        <div className="post_setting_info">
-          <InputBox>
-            <select ref={selectCategoryRef}>
-              <option value={0}>카테고리를 선택해주세요.</option>
-              {categorys.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </InputBox>
+        <PostSettingHeader>
+          <ImageUploadForm
+            imageObj={imageObj}
+            setImageObj={setImageObj}
+            postId={postId}
+          />
 
-          <div>
+          <div className="post_setting_info">
             <InputBox>
-              <span>제목</span>
-              <InputText ref={titleRef} />
+              <select
+                ref={selectCategoryRef}
+                defaultValue={post?.category || 0}
+              >
+                <option value={0}>카테고리를 선택해주세요.</option>
+                {categorys.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
             </InputBox>
+
+            <div>
+              <InputBox>
+                <span>제목</span>
+                <InputText ref={titleRef} defaultValue={post?.title || ""} />
+              </InputBox>
+            </div>
+
+            <div>
+              <CheckBox
+                textLeft={true}
+                ref={cardTypeRef}
+                defaultChecked={!!post?.post_type || false}
+              >
+                카드 타입
+              </CheckBox>
+
+              <InputBox>
+                <span>카드 배경색</span>
+                <input
+                  type="color"
+                  ref={cardBgColorRef}
+                  defaultValue={post?.bg_color || ""}
+                />
+              </InputBox>
+
+              <InputBox>
+                <span>카드 글자색</span>
+                <input
+                  type="color"
+                  ref={cardTextColorRef}
+                  defaultValue={post?.text_color || ""}
+                />
+              </InputBox>
+            </div>
           </div>
+        </PostSettingHeader>
+        <Editor
+          initialValue={post?.content || ""}
+          previewStyle="vertical"
+          height="100%"
+          initialEditType="markdown" //wysiwyg, markdown
+          // previewStyle={'tab'}
+          useCommandShortcut={false}
+          theme={themeType}
+          plugins={[colorSyntax]}
+          hideModeSwitch={true}
+          language="ko-KR"
+          ref={editorRef}
+        />
 
-          <div>
-            <CheckBox textLeft={true} ref={cardTypeRef}>
-              카드 타입
-            </CheckBox>
-
-            <InputBox>
-              <span>카드 배경색</span>
-              <input type="color" ref={cardBgColorRef} />
-            </InputBox>
-
-            <InputBox>
-              <span>카드 글자색</span>
-              <input type="color" ref={cardTextColorRef} />
-            </InputBox>
-          </div>
-        </div>
-      </PostSettingHeader>
-      <Editor
-        initialValue=""
-        previewStyle="vertical"
-        height="100%"
-        initialEditType="markdown" //wysiwyg, markdown
-        // previewStyle={'tab'}
-        useCommandShortcut={false}
-        theme={themeType}
-        plugins={[colorSyntax]}
-        hideModeSwitch={true}
-        language="ko-KR"
-        ref={editorRef}
-      />
-
-      <ButtonArea>
-        ​<Button onClick={handlePostFinishClick}>글쓰기</Button>
-      </ButtonArea>
-    </WriteContainer>
-  );
+        <ButtonArea>
+          ​
+          <Button onClick={handlePostFinishClick}>
+            {postId ? "수정하기" : "글쓰기"}
+          </Button>
+        </ButtonArea>
+      </WriteContainer>
+    );
+  }
 };
 
 export default Write;
@@ -226,6 +301,14 @@ const WriteContainer = styled.section<emotionStyledProps>`
   .toastui-editor-defaultUI {
     border: none;
     /* border-bottom: 1px solid #ddd; */
+  }
+
+  .toastui-editor-defaultUI .ProseMirror,
+  .toastui-editor-main
+    .toastui-editor-md-vertical-style
+    .toastui-editor-md-preview
+    * {
+    font-size: 1rem;
   }
 `;
 
@@ -313,12 +396,15 @@ const InputBox = styled.div`
   }
 
   input[type="color"] {
-    border-radius: 50%;
-    overflow: hidden;
     background-color: transparent;
-    border: 0;
+    border: none;
     width: 30px;
     height: 30px;
+
+    &::-webkit-color-swatch {
+      border-radius: 6px;
+      border: 1px solid #ddd;
+    }
   }
 `;
 
@@ -345,4 +431,17 @@ const ButtonArea = styled.div`
   }
 `;
 
-const ThumbnailBox = styled.div``;
+const GoBackButton = styled.div`
+  position: fixed;
+  left: 0;
+  top: -40px;
+  font-size: 1.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  & button {
+    color: inherit;
+  }
+`;
