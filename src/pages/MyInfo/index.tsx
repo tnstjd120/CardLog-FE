@@ -5,6 +5,7 @@ import MobileContainer from "components/common/MobileContainer";
 import { palette } from "styles/theme";
 import ProfileImageForm from "components/myinfo/ProfileImageForm";
 import ProfileInfoForm from "components/myinfo/ProfileInfoForm";
+import Loading from "components/common/Loading";
 
 const MyInfo = () => {
   return (
