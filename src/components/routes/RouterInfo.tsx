@@ -5,7 +5,8 @@ import Login from "pages/Login";
 import MyInfo from "pages/MyInfo";
 import PostDetail from "pages/PostDetail";
 import Intro from "pages/Intro";
-import PostList from "pages/PostList";
+import Posts from "pages/Posts";
+import Write from "pages/Write";
 
 export interface RouterItem {
   path: string;
@@ -63,7 +64,7 @@ const RouterInfo: RouterItemType = {
   },
   POST_LIST: {
     path: "/posts",
-    element: <PostList />,
+    element: <Posts />,
     label: "게시물 리스트",
     isLoggedIn: false,
     isWithNav: true,
@@ -75,6 +76,14 @@ const RouterInfo: RouterItemType = {
     label: "게시물 상세페이지",
     isLoggedIn: false,
     isWithNav: true,
+    isNavIn: true,
+  },
+  WRITE: {
+    path: "/write",
+    element: <Write />,
+    label: "글쓰기",
+    isLoggedIn: true,
+    isWithNav: false,
     isNavIn: true,
   },
   MYINFO: {
