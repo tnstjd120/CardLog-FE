@@ -10,3 +10,12 @@ export interface PostResponseProps {
   update_at: string;
   create_at: string;
 }
+
+export interface PostDetailResponseProps extends PostResponseProps {
+  user: {
+    id: number;
+    username: string;
+    email: string;
+    profile_img: string;
+  };
+}

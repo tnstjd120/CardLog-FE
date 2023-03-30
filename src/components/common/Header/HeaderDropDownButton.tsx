@@ -25,7 +25,7 @@ const HeaderDropDownButton = (props: ButtonProps) => {
       label: "내 카드로그",
     },
     { value: RouterInfo.MYINFO.path, label: "내 정보" },
-    { value: RouterInfo.MYINFO.path, label: "글쓰기" },
+    { value: RouterInfo.WRITE.path, label: "글쓰기" },
     { value: "", label: "로그아웃" },
   ];
 

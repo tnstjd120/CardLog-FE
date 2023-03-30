@@ -3,7 +3,10 @@ const params = new URLSearchParams(window.location.search);
 const blogIdQuery = `?blog_id=${params.get("blog_id")}`;
 
 const API_Path = {
+  POST_CREATE: `api/post/create/`,
   POSTS: `api/posts/`,
+  CATEGORY: `api/category/`,
+  CATEGORYS: `api/categorys/`,
 
   // Accounts
   SIGNUP: "accounts/register/",

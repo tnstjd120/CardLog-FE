@@ -20,8 +20,7 @@ const ProfileImageForm = () => {
   ) => {
     e.preventDefault();
 
-    const target = e.target;
-    const file = (target.files as FileList)[0];
+    const file = (e.target.files as FileList)[0];
 
     if (file) {
       const formData = new FormData();
