@@ -4,6 +4,8 @@ const blogIdQuery = `?blog_id=${params.get("blog_id")}`;
 
 const API_Path = {
   POST_CREATE: `api/post/create/`,
+  POST_UPDATE: `api/post/update/`,
+  POST_DELETE: `api/post/delete/`,
   POSTS: `api/posts/`,
   CATEGORY: `api/category/`,
   CATEGORYS: `api/categorys/`,
