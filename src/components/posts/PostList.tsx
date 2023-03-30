@@ -74,7 +74,7 @@ const PostList = ({ postId, setPostId }: PostListProps) => {
 
               <dl>
                 <dt>{post.title}</dt>
-                <dd>{post.content.replace(/<[^>]+>/g, "")}</dd>
+                <dd>{post.content}</dd>
               </dl>
               <div>
                 <span>{days(post.create_at)}</span>
