@@ -3,7 +3,6 @@ import SignUpSuccess from "pages/SignUpSuccess";
 import Home from "pages/Home";
 import Login from "pages/Login";
 import MyInfo from "pages/MyInfo";
-import PostDetail from "pages/PostDetail";
 import Intro from "pages/Intro";
 import Posts from "pages/Posts";
 import Write from "pages/Write";
@@ -72,7 +71,7 @@ const RouterInfo: RouterItemType = {
   },
   POST: {
     path: "/posts/:id",
-    element: <PostDetail />,
+    element: <Posts />,
     label: "게시물 상세페이지",
     isLoggedIn: false,
     isWithNav: true,

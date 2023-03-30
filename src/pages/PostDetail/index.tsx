@@ -8,7 +8,7 @@ const postStyles = css`
   padding: 20px;
 `;
 
-const PostDetail = () => {
+const PostDetailaaa = () => {
   const { id } = useParams();
 
   const [postInfo, setPostInfo] = useState({
@@ -46,4 +46,4 @@ const PostDetail = () => {
   );
 };
 
-export default PostDetail;
+export default PostDetailaaa;
