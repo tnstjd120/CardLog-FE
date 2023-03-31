@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useRef, useState } from "react";
 import RouterInfo from "../../routes/RouterInfo";
 import styled from "@emotion/styled";
 import { Link, useLocation } from "react-router-dom";
@@ -9,6 +9,7 @@ import { UserState } from "store/user";
 import { ThemeStateProps } from "store/themeType";
 import { useTheme } from "@emotion/react";
 import { emotionStyledProps } from "types/emotionStyled";
+import AddCategory from "./AddCategory";
 
 const Nav: React.FC = (): JSX.Element => {
   const { themeType } = useSelector<RootState>(
@@ -16,6 +17,7 @@ const Nav: React.FC = (): JSX.Element => {
   ) as ThemeStateProps;
 
   const theme = useTheme();
+  const color = theme[themeType].color;
   const hoverBackgroundColor = theme[themeType].hoverBackgroundColor;
   const hoverColor = theme[themeType].hoverColor;
 
@@ -28,6 +30,7 @@ const Nav: React.FC = (): JSX.Element => {
     <NavContainer
       hoverBackgroundColor={hoverBackgroundColor}
       hoverColor={hoverColor}
+      color={color}
     >
       {user.category.map((item) => (
         <Link
@@ -38,6 +41,8 @@ const Nav: React.FC = (): JSX.Element => {
           {item.name}
         </Link>
       ))}
+
+      <AddCategory />
     </NavContainer>
   );
 };
