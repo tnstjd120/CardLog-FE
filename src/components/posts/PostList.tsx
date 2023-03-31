@@ -2,7 +2,9 @@
 import React, { SetStateAction, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import API_Path from "utils/path/API_Path";
-import { useLocation, useNavigate } from "react-router-dom";
+import Loading from "components/common/Loading";
+import PostListTitle from "./PostListTitle";
+import { useLocation } from "react-router-dom";
 import { api } from "libs/axios";
 import { PostResponseProps } from "types/Post";
 import { useSelector } from "react-redux";
@@ -12,12 +14,7 @@ import { useTheme } from "@emotion/react";
 import { emotionStyledProps } from "types/emotionStyled";
 import { days } from "utils/date/days";
 import { BiComment } from "react-icons/bi";
-import RouterInfo from "components/routes/RouterInfo";
-import PostDetail from "./PostDetail";
-import PostListTitle from "./PostListTitle";
 import { Viewer } from "@toast-ui/react-editor";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import Loading from "components/common/Loading";
 
 interface PostListProps {
   postId: number;
@@ -37,6 +34,7 @@ const PostList = ({ postId, setPostId }: PostListProps) => {
   const categoryId = new URLSearchParams(location.search).get(
     "category"
   ) as string;
+  const blogId = new URLSearchParams(location.search).get("blog_id") as string;
 
   const [posts, setPosts] = useState<PostResponseProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -49,7 +47,7 @@ const PostList = ({ postId, setPostId }: PostListProps) => {
     setIsLoading(true);
 
     api
-      .get(`${API_Path.POSTS}?category=${categoryId}`)
+      .get(`${API_Path.POSTS}?blog_id=${blogId}&category=${categoryId}`)
       .then((res) => setPosts(res.data))
       .catch((error) => console.log(error))
       .finally(() => {
