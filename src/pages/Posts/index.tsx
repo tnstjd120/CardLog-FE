@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import ToggleLamp from "components/common/Lamp";
+import Lamp from "components/common/Lamp";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { ThemeStateProps } from "store/themeType";
@@ -35,7 +35,7 @@ const Posts = () => {
 
       <RightArea>
         <div>
-          <ToggleLamp />
+          <Lamp />
         </div>
 
         <div className="news">개발뉴스</div>

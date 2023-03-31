@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
-import ToggleLamp from "components/common/Lamp";
+import Lamp from "components/common/Lamp";
 import TodayBox from "components/common/TodayBox";
 import CardWrapper from "components/home/CardWrapper";
 import { useSelector } from "react-redux";
@@ -19,7 +19,7 @@ const Home = () => {
         </div>
 
         <div>
-          <ToggleLamp />
+          <Lamp />
         </div>
       </HomeTopArea>
 
