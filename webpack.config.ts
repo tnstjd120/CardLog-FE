@@ -7,6 +7,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
   },
   resolve: {
+    extensions: [".js", ".jsx", ".ts", ".tsx"], // 이 부분 추가
     alias: {
       "@": path.resolve(__dirname, "src/"),
       "@assets": path.resolve(__dirname, "src/assets/"),
@@ -19,7 +20,6 @@ module.exports = {
       "@styles": path.resolve(__dirname, "src/styles/"),
       "@utils": path.resolve(__dirname, "src/utils/"),
     },
-    extensions: [".tsx", ".ts", ".js"], // TypeScript 확장자 등록
   },
   resolveLoader: {
     modules: ["node_modules"],
