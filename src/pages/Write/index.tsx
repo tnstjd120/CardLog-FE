@@ -1,35 +1,33 @@
 /** @jsxImportSource @emotion/react */
-import React, { useEffect, useRef, useState } from "react";
-import styled from "@emotion/styled";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 import "tui-color-picker/dist/tui-color-picker.css";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 import "@toast-ui/editor/dist/i18n/ko-kr";
-import { Editor, Viewer } from "@toast-ui/react-editor";
+import React, { useEffect, useRef, useState } from "react";
+import InputText from "components/common/Input/InputText";
+import API_Path from "utils/path/API_Path";
+import Swal from "sweetalert2";
+import Loading from "components/common/Loading";
+import RouterInfo from "components/routes/RouterInfo";
+import Button from "components/common/Button";
+import CheckBox from "components/common/CheckBox";
+import ImageUploadForm from "components/write/ImagePreview";
+import styled from "@emotion/styled";
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
+import { Editor } from "@toast-ui/react-editor";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { ThemeStateProps } from "store/themeType";
 import { useTheme } from "@emotion/react";
 import { emotionStyledProps } from "types/emotionStyled";
-import InputText from "components/common/Input/InputText";
-import Button from "components/common/Button";
-import CheckBox from "components/common/CheckBox";
-import ImageUploadForm from "components/write/ImagePreview";
 import { MyInfoState } from "store/myInfo";
 import { CategoryResponseProps } from "types/Category";
 import { accessApi, api } from "libs/axios";
-import API_Path from "utils/path/API_Path";
-import Swal from "sweetalert2";
 import { palette } from "styles/theme";
-import Loading from "components/common/Loading";
 import { useLocation, useNavigate } from "react-router-dom";
-import RouterInfo from "components/routes/RouterInfo";
-import { getCookie } from "utils/cookie/universal-cookie";
 import { PostDetailResponseProps } from "types/Post";
-import { FaArrowLeft, FaChevronLeft } from "react-icons/fa";
-import { BsFillArrowLeftSquareFill } from "react-icons/bs";
+import { FaArrowLeft } from "react-icons/fa";
 
 export interface ImageObjProps {
   preview: string | undefined;
@@ -340,6 +338,7 @@ const PostSettingHeader = styled.div`
       border: 1px solid #ddd;
       border-radius: 4px;
       color: inherit;
+      background-color: transparent;
       /* outline: #ddd; */
     }
 
@@ -393,6 +392,10 @@ const InputBox = styled.div`
     margin-bottom: 0;
     color: inherit;
     font-size: 1rem;
+
+    &:focus {
+      border-bottom: 1px solid #ddd;
+    }
   }
 
   input[type="color"] {
