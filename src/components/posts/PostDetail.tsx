@@ -40,7 +40,7 @@ const PostDetail = ({ postId, setPostId }: PostDetailProps) => {
   ) as string;
 
   const [post, setPost] = useState<PostDetailResponseProps | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     readPost();
@@ -74,7 +74,6 @@ const PostDetail = ({ postId, setPostId }: PostDetailProps) => {
           </Button>
 
           <h3>{post?.title}</h3>
-
           <div className="detail_header_bottom">
             <div className="post_info">
               {post?.user.profile_img && (
@@ -255,5 +254,9 @@ const PostDetailContainer = styled.div<emotionStyledProps>`
 
   .toastui-editor-contents {
     font-size: 1rem;
+
+    & * {
+      color: inherit;
+    }
   }
 `;
