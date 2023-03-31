@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import styled from "@emotion/styled";
-import Lamp from "components/common/Lamp";
-import TodayBox from "components/common/TodayBox";
-import CardWrapper from "components/home/CardWrapper";
+import Lamp from "@components/common/Lamp";
+import TodayBox from "@components/common/TodayBox";
+import CardWrapper from "@components/home/CardWrapper";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { UserState } from "store/user";

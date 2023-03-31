@@ -12,7 +12,7 @@ import { emotionStyledProps } from "types/emotionStyled";
 import SideBar from "./components/common/SideBar";
 import RoutesObject from "./components/routes";
 import styled from "@emotion/styled";
-import Header from "components/common/Header";
+import Header from "@components/common/Header";
 
 function App() {
   const { themeType } = useSelector<RootState>(
