@@ -41,7 +41,11 @@ const ImageUploadForm = ({
 
       <div className="img_wrap" onClick={() => imageRef.current?.click()}>
         {imageObj ? (
-          <img src={imageObj.preview} alt="Thumbnail 미리보기" />
+          <img
+            src={imageObj.preview}
+            alt="Thumbnail 미리보기"
+            onError={() => setImageObj(undefined)}
+          />
         ) : (
           <BsImage />
         )}
