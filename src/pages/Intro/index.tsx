@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import styled from "@emotion/styled";
-import Button from "components/common/Button";
-import RouterInfo from "components/routes/RouterInfo";
 import React from "react";
+import styled from "@emotion/styled";
+import Button from "@components/common/Button";
+import RouterInfo from "@components/routes/RouterInfo";
 import { useNavigate } from "react-router-dom";
 import { palette } from "styles/theme";
 

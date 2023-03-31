@@ -107,6 +107,7 @@
     "prettier-eslint": "^15.0.1",
     "prettier-eslint-cli": "^7.1.0",
     "prop-types": "^15.8.1",
+    "ts-loader": "^9.4.2",
     "tsconfig-paths-webpack-plugin": "^4.0.1",
     "webpack": "^5.76.0"
   }
