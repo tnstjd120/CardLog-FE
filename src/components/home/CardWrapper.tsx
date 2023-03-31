@@ -2,7 +2,7 @@
 import styled from "@emotion/styled";
 import Button from "components/common/Button";
 import { css, useTheme } from "@emotion/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 import { useSelector } from "react-redux";
@@ -12,6 +12,8 @@ import { ThemeStateProps } from "store/themeType";
 import { UserState } from "store/user";
 import { palette } from "styles/theme";
 import { emotionStyledProps } from "types/emotionStyled";
+import RouterInfo from "components/routes/RouterInfo";
+import PostDetail from "components/posts/PostDetail";
 
 const CardWrapper = () => {
   const { themeType } = useSelector<RootState>(
@@ -23,6 +25,7 @@ const CardWrapper = () => {
 
   const navigate = useNavigate();
   const user = useSelector<RootState>((state) => state.user) as UserState;
+  const [postId, setPostId] = useState<number>(0);
   const CardsRef = useRef<HTMLUListElement>(null);
 
   const handleScrollLeft = (type: string) => {
@@ -39,16 +42,14 @@ const CardWrapper = () => {
   return (
     <CardWrapperContainer color={color}>
       <ul ref={CardsRef}>
-        <button type="button">
+        <button type="button" onClick={() => navigate(RouterInfo.WRITE.path)}>
           <AiOutlinePlus />
         </button>
 
         {user.post.map((item) => (
           <li
             key={item.id}
-            onClick={() => {
-              navigate(`/posts/${item.id}`);
-            }}
+            onClick={() => setPostId(item.id)}
             css={css`
               background-color: ${item.bg_color};
               color: ${item.text_color};
@@ -68,6 +69,8 @@ const CardWrapper = () => {
           <IoMdArrowDropright />
         </Button>
       </div>
+
+      {!!postId && <PostDetail postId={postId} setPostId={setPostId} />}
     </CardWrapperContainer>
   );
 };
@@ -134,6 +137,7 @@ const CardWrapperContainer = styled.div<emotionStyledProps>`
       margin-left: 50px;
       min-width: 280px;
       height: 400px;
+      padding: 10px;
       cursor: pointer;
       transition: 0.3s ease-in-out;
 

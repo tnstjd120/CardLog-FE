@@ -17,5 +17,6 @@ export interface PostDetailResponseProps extends PostResponseProps {
     username: string;
     email: string;
     profile_img: string;
+    blog_id: string;
   };
 }

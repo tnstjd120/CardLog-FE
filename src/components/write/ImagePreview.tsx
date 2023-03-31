@@ -8,8 +8,13 @@ import { palette } from "styles/theme";
 interface ImageUploadFormProps {
   imageObj: ImageObjProps | undefined;
   setImageObj: React.Dispatch<SetStateAction<ImageObjProps | undefined>>;
+  postId: string | null;
 }
-const ImageUploadForm = ({ imageObj, setImageObj }: ImageUploadFormProps) => {
+const ImageUploadForm = ({
+  imageObj,
+  setImageObj,
+  postId,
+}: ImageUploadFormProps) => {
   const imageRef = useRef<HTMLInputElement | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +41,11 @@ const ImageUploadForm = ({ imageObj, setImageObj }: ImageUploadFormProps) => {
 
       <div className="img_wrap" onClick={() => imageRef.current?.click()}>
         {imageObj ? (
-          <img src={imageObj.preview} alt="Thumbnail 미리보기" />
+          <img
+            src={imageObj.preview}
+            alt="Thumbnail 미리보기"
+            onError={() => setImageObj(undefined)}
+          />
         ) : (
           <BsImage />
         )}

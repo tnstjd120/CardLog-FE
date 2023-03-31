@@ -46,7 +46,7 @@ export default Header;
 
 const HeaderContainer = styled.header`
   height: 5vh;
-  width: 100%;
+  width: calc(100% - 40px);
   max-width: 1200px;
   margin: 0 auto;
   position: fixed;

@@ -1,10 +1,12 @@
-const params = new URLSearchParams(window.location.search);
-
-const blogIdQuery = `?blog_id=${params.get("blog_id")}`;
-
 const API_Path = {
   POST_CREATE: `api/post/create/`,
+  POST_UPDATE: `api/post/update/`,
+  POST_DELETE: `api/post/delete/`,
   POSTS: `api/posts/`,
+
+  CATEGORY_CREATE: `api/category/create/`,
+  CATEGORY_UPDATE: `api/category/update/`,
+  CATEGORY_DELETE: `api/category/delete/`,
   CATEGORY: `api/category/`,
   CATEGORYS: `api/categorys/`,
 

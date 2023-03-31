@@ -2,7 +2,9 @@
 import React, { SetStateAction, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import API_Path from "utils/path/API_Path";
-import { useLocation, useNavigate } from "react-router-dom";
+import Loading from "components/common/Loading";
+import PostListTitle from "./PostListTitle";
+import { useLocation } from "react-router-dom";
 import { api } from "libs/axios";
 import { PostResponseProps } from "types/Post";
 import { useSelector } from "react-redux";
@@ -12,11 +14,7 @@ import { useTheme } from "@emotion/react";
 import { emotionStyledProps } from "types/emotionStyled";
 import { days } from "utils/date/days";
 import { BiComment } from "react-icons/bi";
-import RouterInfo from "components/routes/RouterInfo";
-import PostDetail from "./PostDetail";
-import PostListTitle from "./PostListTitle";
 import { Viewer } from "@toast-ui/react-editor";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 interface PostListProps {
   postId: number;
@@ -36,60 +34,79 @@ const PostList = ({ postId, setPostId }: PostListProps) => {
   const categoryId = new URLSearchParams(location.search).get(
     "category"
   ) as string;
+  const blogId = new URLSearchParams(location.search).get("blog_id") as string;
 
   const [posts, setPosts] = useState<PostResponseProps[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     readPosts();
   }, [categoryId]);
 
   const readPosts = () => {
+    setIsLoading(true);
+
     api
-      .get(`${API_Path.POSTS}?category=${categoryId}`)
+      .get(`${API_Path.POSTS}?blog_id=${blogId}&category=${categoryId}`)
       .then((res) => setPosts(res.data))
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 300);
+      });
   };
 
-  return (
-    <>
-      <PostListTitle categoryId={categoryId} postsLength={posts.length} />
+  if (isLoading) {
+    return <Loading />;
+  } else {
+    return (
+      <>
+        <PostListTitle categoryId={categoryId} postsLength={posts.length} />
 
-      <PostsContainer color={color} hoverBackgroundColor={hoverBackgroundColor}>
-        {posts.length ? (
-          posts.map((post) => (
-            <li
-              key={post.id}
-              onClick={() => {
-                setPostId(post.id);
-              }}
-            >
-              {post.thumbnail && (
-                <div className="img_wrap">
-                  <img
-                    src={`https://cardlog-bucket.s3.amazonaws.com/${post.thumbnail}`}
-                    alt="post_thumbnail"
-                  />
+        <PostsContainer
+          color={color}
+          hoverBackgroundColor={hoverBackgroundColor}
+        >
+          {posts.length ? (
+            posts.map((post) => (
+              <li
+                key={post.id}
+                onClick={() => {
+                  setPostId(post.id);
+                }}
+              >
+                {post.thumbnail && (
+                  <div className="img_wrap">
+                    <img
+                      src={`https://cardlog-bucket.s3.amazonaws.com/${post.thumbnail}`}
+                      alt="post_thumbnail"
+                    />
+                  </div>
+                )}
+
+                <dl>
+                  <dt>{post.title}</dt>
+                  <dd>
+                    <Viewer initialValue={post.content} />
+                  </dd>
+                  {/* <dd>{post.content}</dd> */}
+                </dl>
+                <div>
+                  <span>{days(post.create_at)}</span>
+                  <span>
+                    <BiComment /> <strong>3</strong>
+                  </span>
                 </div>
-              )}
-
-              <dl>
-                <dt>{post.title}</dt>
-                <dd>{post.content}</dd>
-              </dl>
-              <div>
-                <span>{days(post.create_at)}</span>
-                <span>
-                  <BiComment /> <strong>3</strong>
-                </span>
-              </div>
-            </li>
-          ))
-        ) : (
-          <h3>게시물이 없습니다.</h3>
-        )}
-      </PostsContainer>
-    </>
-  );
+              </li>
+            ))
+          ) : (
+            <h3>게시물이 없습니다.</h3>
+          )}
+        </PostsContainer>
+      </>
+    );
+  }
 };
 
 export default PostList;
@@ -135,6 +152,30 @@ const PostsContainer = styled.ul<emotionStyledProps>`
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 3;
         overflow: hidden;
+
+        .toastui-editor-contents * {
+          font-size: 1rem;
+          color: inherit !important;
+          margin: 0;
+          padding: 0;
+          border: 0;
+          font-weight: 400;
+          display: flex;
+          background-color: transparent;
+          display: inline;
+          list-style: none;
+          letter-spacing: 0 !important;
+          font-family: "Noto Sans KR", sans-serif !important;
+          ul,
+          ol,
+          li {
+            display: none;
+          }
+          &::before,
+          &::after {
+            display: none;
+          }
+        }
       }
     }
 

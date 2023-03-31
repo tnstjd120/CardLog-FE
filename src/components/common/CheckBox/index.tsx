@@ -11,6 +11,7 @@ export interface CheckBoxProps {
   children?: string | React.ReactElement;
   id?: string;
   name?: string;
+  defaultChecked?: boolean;
   checked?: boolean;
   marginRight?: string;
   borderBottom?: boolean;
@@ -28,6 +29,7 @@ const CheckBox = React.forwardRef<HTMLInputElement, CheckBoxProps>(
       children,
       id,
       name,
+      defaultChecked,
       checked,
       marginRight = 0,
       borderBottom,
@@ -110,6 +112,7 @@ const CheckBox = React.forwardRef<HTMLInputElement, CheckBoxProps>(
             type="checkbox"
             id={id}
             name={name}
+            defaultChecked={defaultChecked}
             checked={checked}
             ref={ref}
             onChange={onChange}
