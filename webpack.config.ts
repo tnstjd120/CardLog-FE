@@ -9,16 +9,16 @@ module.exports = {
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"], // 이 부분 추가
     alias: {
-      "@": path.resolve(__dirname, "src/"),
-      "@assets": path.resolve(__dirname, "src/assets/"),
-      "@components": path.resolve(__dirname, "src/components/"),
-      "@hooks": path.resolve(__dirname, "src/hooks/"),
-      "@types": path.resolve(__dirname, "src/types/"),
-      "@libs": path.resolve(__dirname, "src/libs/"),
-      "@pages": path.resolve(__dirname, "src/pages/"),
-      "@store": path.resolve(__dirname, "src/store/"),
-      "@styles": path.resolve(__dirname, "src/styles/"),
-      "@utils": path.resolve(__dirname, "src/utils/"),
+      "/": path.resolve(__dirname, "src/"),
+      assets: path.resolve(__dirname, "src/assets/"),
+      components: path.resolve(__dirname, "src/components/"),
+      hooks: path.resolve(__dirname, "src/hooks/"),
+      types: path.resolve(__dirname, "src/types/"),
+      libs: path.resolve(__dirname, "src/libs/"),
+      pages: path.resolve(__dirname, "src/pages/"),
+      store: path.resolve(__dirname, "src/store/"),
+      styles: path.resolve(__dirname, "src/styles/"),
+      utils: path.resolve(__dirname, "src/utils/"),
     },
   },
   resolveLoader: {
