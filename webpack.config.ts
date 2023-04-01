@@ -7,32 +7,28 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
   },
   resolve: {
-    extensions: [".js", ".jsx", ".ts", ".tsx"], // 이 부분 추가
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
     alias: {
-      "/": path.resolve(__dirname, "src/"),
-      assets: path.resolve(__dirname, "src/assets/"),
-      components: path.resolve(__dirname, "src/components/"),
-      hooks: path.resolve(__dirname, "src/hooks/"),
-      types: path.resolve(__dirname, "src/types/"),
-      libs: path.resolve(__dirname, "src/libs/"),
-      pages: path.resolve(__dirname, "src/pages/"),
-      store: path.resolve(__dirname, "src/store/"),
-      styles: path.resolve(__dirname, "src/styles/"),
-      utils: path.resolve(__dirname, "src/utils/"),
+      "@": path.resolve(__dirname, "src/"),
+      "@auth": path.resolve(__dirname, "src/auth/"),
+      "@stories": path.resolve(__dirname, "src/stories/"),
+      "@components": path.resolve(__dirname, "src/components/"),
+      "@hooks": path.resolve(__dirname, "src/hooks/"),
+      "@types": path.resolve(__dirname, "src/types/"),
+      "@libs": path.resolve(__dirname, "src/libs/"),
+      "@pages": path.resolve(__dirname, "src/pages/"),
+      "@store": path.resolve(__dirname, "src/store/"),
+      "@styles": path.resolve(__dirname, "src/styles/"),
+      "@utils": path.resolve(__dirname, "src/utils/"),
     },
-  },
-  resolveLoader: {
-    modules: ["node_modules"],
-    extensions: [".js", ".json"],
-    mainFields: ["loader", "main"],
   },
   module: {
     rules: [
       {
-        test: /\.(ts|js)x?$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: "ts-loader",
         },
       },
       {
