@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import Lamp from "@/components/common/Lamps";
+import Lamp from "components/common/Lamp";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { ThemeStateProps } from "store/themeType";
