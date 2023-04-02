@@ -10,7 +10,6 @@ import { RootState } from "store";
 import { ThemeStateProps } from "store/themeType";
 import { logout } from "auth/jwtAuth";
 import { IoMdArrowDropdown } from "react-icons/io";
-import "react-dropdown/style.css";
 
 interface MenuListProps {
   value: string | Promise<void>;
