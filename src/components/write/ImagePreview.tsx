@@ -1,8 +1,7 @@
 import styled from "@emotion/styled";
 import { ImageObjProps } from "pages/Write";
-import React, { SetStateAction, useRef, useState } from "react";
+import React, { SetStateAction, useRef } from "react";
 import { BsImage } from "react-icons/bs";
-import { FaUserCircle } from "react-icons/fa";
 import { palette } from "styles/theme";
 
 interface ImageUploadFormProps {
