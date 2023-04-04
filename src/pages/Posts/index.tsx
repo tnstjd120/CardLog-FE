@@ -1,15 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Lamp from "components/common/Lamp";
+import PostList from "components/posts/PostList";
+import PostDetail from "components/posts/PostDetail";
+import PostRanking from "components/posts/PostRanking";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { ThemeStateProps } from "store/themeType";
 import { useTheme } from "@emotion/react";
 import { emotionStyledProps } from "types/emotionStyled";
-import PostList from "components/posts/PostList";
-import PostDetail from "components/posts/PostDetail";
-import Loading from "components/common/Loading";
 
 interface postsEmotionStyledProps extends emotionStyledProps {
   postId?: number;
@@ -38,7 +38,7 @@ const Posts = () => {
           <Lamp />
         </div>
 
-        <div className="news">개발뉴스</div>
+        <PostRanking />
       </RightArea>
     </PostsWrap>
   );
@@ -72,13 +72,6 @@ const RightArea = styled.div`
   & > div:first-of-type {
     width: 100%;
     height: 40%;
-  }
-
-  & .news {
-    width: 100%;
-    height: 60%;
-    border: 1px solid #ddd;
-    border-radius: 6px;
   }
 `;
 
