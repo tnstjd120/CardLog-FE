@@ -38,9 +38,13 @@ const ProfileInfoContainer = styled.div`
     font-size: 1.2em;
     font-weight: 500;
     text-align: center;
+    padding: 0 10px;
 
     a {
       color: inherit;
+      width: 100%;
+      display: block;
+      word-break: break-all;
     }
   }
 
