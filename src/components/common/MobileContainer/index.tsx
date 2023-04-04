@@ -51,7 +51,10 @@ const MobileContainer: React.FC<MobileContainerProps> = ({
         <div className="content">
           {caption && (
             <figure className="logo">
-              <img src="assets/logo.svg" alt="CardLog Logo" />
+              <img
+                src={`${process.env.PUBLIC_URL}/assets/logo.svg`}
+                alt="CardLog Logo"
+              />
 
               <figcaption>{caption}</figcaption>
             </figure>
