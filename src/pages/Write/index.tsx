@@ -9,7 +9,6 @@ import InputText from "components/common/Input/InputText";
 import API_Path from "utils/path/API_Path";
 import Swal from "sweetalert2";
 import Loading from "components/common/Loading";
-import RouterInfo from "components/routes/RouterInfo";
 import Button from "components/common/Button";
 import CheckBox from "components/common/CheckBox";
 import ImageUploadForm from "components/write/ImagePreview";
@@ -35,6 +34,15 @@ export interface ImageObjProps {
 }
 
 const Write = () => {
+  const toolbarItems = [
+    ["heading", "bold", "italic", "strike"],
+    ["hr"],
+    ["ul", "ol", "task"],
+    ["table", "link"],
+    ["code"],
+    ["scrollSync"],
+  ];
+
   const { themeType } = useSelector<RootState>(
     (state) => state.themeType
   ) as ThemeStateProps;
@@ -47,13 +55,17 @@ const Write = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const postId = new URLSearchParams(location.search).get("post_id");
+  const categoryId = new URLSearchParams(location.search).get(
+    "category"
+  ) as string;
+  const isCard = new URLSearchParams(location.search).get("isCard");
 
   const [imageObj, setImageObj] = useState<ImageObjProps | undefined>(
     undefined
   );
   const [post, setPost] = useState<PostDetailResponseProps | null>(null);
   const [categorys, setCategorys] = useState<CategoryResponseProps[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const editorRef = useRef<any>();
   const selectCategoryRef = useRef<HTMLSelectElement | null>(null);
@@ -174,102 +186,107 @@ const Write = () => {
       .then((res) => console.log(res))
       .catch((error) => console.log(error))
       .finally(() => {
-        navigate(
-          `${RouterInfo.POST_LIST.path}?blog_id=${myInfo.blog_id}&category=${categorys[0].id}`
-        );
+        navigate(-1);
+        // navigate(
+        //   `${RouterInfo.POST_LIST.path}?blog_id=${myInfo.blog_id}&category=${categorys[0].id}`
+        // );
       });
   };
 
-  if (isLoading) {
-    return <Loading />;
-  } else {
-    return (
-      <WriteContainer color={color} backgroundColor={backgroundColor}>
-        <GoBackButton onClick={() => navigate(-1)}>
-          <FaArrowLeft />
-        </GoBackButton>
+  if (isLoading) return <Loading />;
 
-        <PostSettingHeader>
-          <ImageUploadForm
-            imageObj={imageObj}
-            setImageObj={setImageObj}
-            postId={postId}
-          />
+  return (
+    <WriteContainer color={color} backgroundColor={backgroundColor}>
+      <GoBackButton onClick={() => navigate(-1)}>
+        <FaArrowLeft />
+      </GoBackButton>
 
-          <div className="post_setting_info">
-            <InputBox>
-              <select
-                ref={selectCategoryRef}
-                defaultValue={post?.category || 0}
-              >
-                <option value={0}>카테고리를 선택해주세요.</option>
-                {categorys.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-              </select>
-            </InputBox>
-
-            <div>
-              <InputBox>
-                <span>제목</span>
-                <InputText ref={titleRef} defaultValue={post?.title || ""} />
-              </InputBox>
-            </div>
-
-            <div>
-              <CheckBox
-                textLeft={true}
-                ref={cardTypeRef}
-                defaultChecked={!!post?.post_type || false}
-              >
-                카드 타입
-              </CheckBox>
-
-              <InputBox>
-                <span>카드 배경색</span>
-                <input
-                  type="color"
-                  ref={cardBgColorRef}
-                  defaultValue={post?.bg_color || ""}
-                />
-              </InputBox>
-
-              <InputBox>
-                <span>카드 글자색</span>
-                <input
-                  type="color"
-                  ref={cardTextColorRef}
-                  defaultValue={post?.text_color || ""}
-                />
-              </InputBox>
-            </div>
-          </div>
-        </PostSettingHeader>
-        <Editor
-          initialValue={post?.content || ""}
-          previewStyle="vertical"
-          height="100%"
-          initialEditType="markdown" //wysiwyg, markdown
-          // previewStyle={'tab'}
-          useCommandShortcut={false}
-          theme={themeType}
-          plugins={[colorSyntax]}
-          hideModeSwitch={true}
-          language="ko-KR"
-          ref={editorRef}
+      <PostSettingHeader>
+        <ImageUploadForm
+          imageObj={imageObj}
+          setImageObj={setImageObj}
+          postId={postId}
         />
 
-        <ButtonArea>
-          ​
-          <Button onClick={handlePostFinishClick}>
-            {postId ? "수정하기" : "글쓰기"}
-          </Button>
-        </ButtonArea>
-      </WriteContainer>
-    );
-  }
+        <div className="post_setting_info">
+          <InputBox>
+            <select ref={selectCategoryRef} defaultValue={post?.category || 0}>
+              <option value={0}>카테고리를 선택해주세요.</option>
+              {categorys.map((category) => (
+                <option
+                  key={category.id}
+                  value={category.id}
+                  selected={+categoryId === category.id ? true : false}
+                >
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </InputBox>
+
+          <div>
+            <InputBox>
+              <span>제목</span>
+              <InputText
+                ref={titleRef}
+                defaultValue={post?.title || ""}
+                maxLength={50}
+              />
+            </InputBox>
+          </div>
+
+          <div>
+            <CheckBox
+              textLeft={true}
+              ref={cardTypeRef}
+              defaultChecked={isCard ? true : !!post?.post_type || false}
+            >
+              카드 타입
+            </CheckBox>
+
+            <InputBox>
+              <span>카드 배경색</span>
+              <input
+                type="color"
+                ref={cardBgColorRef}
+                defaultValue={post?.bg_color || "#000000"}
+              />
+            </InputBox>
+
+            <InputBox>
+              <span>카드 글자색</span>
+              <input
+                type="color"
+                ref={cardTextColorRef}
+                defaultValue={post?.text_color || "#FFFFFF"}
+              />
+            </InputBox>
+          </div>
+        </div>
+      </PostSettingHeader>
+      <Editor
+        initialValue={post?.content || ""}
+        previewStyle="vertical"
+        height="100%"
+        initialEditType="markdown" //wysiwyg, markdown
+        // previewStyle={'tab'}
+        useCommandShortcut={false}
+        theme={themeType}
+        toolbarItems={toolbarItems}
+        plugins={[colorSyntax]}
+        hideModeSwitch={true}
+        language="ko-KR"
+        ref={editorRef}
+      />
+
+      <ButtonArea>
+        ​<Button onClick={() => navigate(-1)}>뒤로가기</Button>
+        <Button onClick={handlePostFinishClick}>
+          {postId ? "수정하기" : "글쓰기"}
+        </Button>
+      </ButtonArea>
+    </WriteContainer>
+  );
 };
 
 export default Write;
@@ -280,6 +297,7 @@ const WriteContainer = styled.section<emotionStyledProps>`
   bottom: 0;
   width: 100%;
   height: calc(100% - 180px);
+  background-color: ${(props) => props.backgroundColor};
 
   .toastui-editor-dark .toastui-editor-md-container,
   .toastui-editor-dark .toastui-editor-ww-container {
@@ -317,6 +335,7 @@ const PostSettingHeader = styled.div`
   width: 100%;
   height: 180px;
   display: flex;
+  background-color: inherit;
 
   & > div:first-of-type {
     flex-basis: 180px;
@@ -427,6 +446,11 @@ const ButtonArea = styled.div`
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 6px 12px;
+    margin-left: 20px;
+
+    &:first-of-type {
+      margin-left: 0;
+    }
 
     &:hover {
       text-decoration: underline;
