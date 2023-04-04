@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import Button from "components/common/Button";
-import { api } from "libs/axios";
+import { accessApi, api } from "libs/axios";
 import { useRef } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { MdModeEditOutline } from "react-icons/md";
@@ -27,7 +27,7 @@ const ProfileImageForm = () => {
       formData.append("files", file);
       formData.append("id", myInfo.id + "");
 
-      await api
+      await accessApi
         .post(`${API_Path.PROFILE_IMAGE}?host_id=profile`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
