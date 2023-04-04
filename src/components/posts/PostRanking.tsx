@@ -8,6 +8,8 @@ import API_Path from "utils/path/API_Path";
 import { RankingResponseProps } from "types/Post";
 import Loading from "../common/Loading";
 import { useNavigate } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
+import { palette } from "styles/theme";
 
 const PostRanking = () => {
   const navigate = useNavigate();
@@ -47,10 +49,14 @@ const PostRanking = () => {
           >
             <div className="left_area">
               <div className="img_wrap">
-                <img
-                  src={`https://cardlog-bucket.s3.amazonaws.com/${user.profile_img}`}
-                  alt="profile_img"
-                />
+                {user.profile_img ? (
+                  <img
+                    src={`https://cardlog-bucket.s3.amazonaws.com/${user.profile_img}`}
+                    alt="profile_img"
+                  />
+                ) : (
+                  <FaUserCircle />
+                )}
               </div>
 
               <div className="text_wrap">
@@ -111,6 +117,12 @@ const PostRankingContainer = styled.div<emotionStyledProps>`
           display: flex;
           justify-content: center;
           align-items: center;
+          background-color: ${palette.gray0};
+
+          & > svg {
+            font-size: 2.5em;
+            color: ${palette.white};
+          }
         }
 
         .text_wrap {
