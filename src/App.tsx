@@ -13,8 +13,12 @@ import SideBar from "./components/common/SideBar";
 import RoutesObject from "./components/routes";
 import styled from "@emotion/styled";
 import Header from "components/common/Header";
+import axios from "axios";
 
 function App() {
+  axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+  axios.defaults.xsrfCookieName = "csrftoken";
+
   const { themeType } = useSelector<RootState>(
     (state) => state.themeType
   ) as ThemeStateProps;
