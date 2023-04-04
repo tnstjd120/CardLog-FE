@@ -23,6 +23,7 @@ const SideBarContainer = styled.article`
   position: relative;
   flex-basis: 200px;
   flex-shrink: 0;
+  max-width: 200px;
   height: 100%;
   font-size: 16px;
   font-weight: 300;
