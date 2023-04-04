@@ -1,9 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import styled from "@emotion/styled";
-import Button from "components/common/Button";
 import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "@emotion/react";
-import { AiOutlinePlus } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { ThemeStateProps } from "store/themeType";
@@ -14,6 +12,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import RouterInfo from "components/routes/RouterInfo";
 import Swal from "sweetalert2";
 import { palette } from "styles/theme";
+import { MyInfoState } from "store/myInfo";
+import Loading from "../common/Loading";
 
 interface PostListTitleProps {
   categoryId: string | number;
@@ -33,8 +33,11 @@ const PostListTitle = ({ categoryId, postsLength }: PostListTitleProps) => {
   const location = useLocation();
   const blogId = new URLSearchParams(location.search).get("blog_id");
 
+  const myInfo = useSelector<RootState>((state) => state.myInfo) as MyInfoState;
   const [categoryName, setCategoryName] = useState<string | null>(null);
   const [isAddCategory, setIsAddCategory] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const categoryRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -92,7 +95,7 @@ const PostListTitle = ({ categoryId, postsLength }: PostListTitleProps) => {
   };
 
   const handleUpdateCategory = () => {
-    console.log(categoryRef.current?.value);
+    setIsLoading(true);
     if (!categoryRef.current?.value) {
       Swal.fire({
         icon: "warning",
@@ -117,12 +120,14 @@ const PostListTitle = ({ categoryId, postsLength }: PostListTitleProps) => {
 
     accessApi
       .post(API_Path.CATEGORY_UPDATE, formData)
-      .then((res) => {})
+      .then((res) => {
+        setIsAddCategory(false);
+      })
       .catch((error) => console.log(error))
       .finally(() => {
-        setIsAddCategory(false);
         navigate(`${RouterInfo.POST_LIST.path}/${location.search}`);
-        setCategoryName(categoryRef.current?.value as string);
+        readCategoryName();
+        setIsLoading(false);
       });
   };
 
@@ -140,6 +145,7 @@ const PostListTitle = ({ categoryId, postsLength }: PostListTitleProps) => {
     }
   };
 
+  if (isLoading) return <Loading />;
   return (
     <PostsTitle color={color} backgroundColor={backgroundColor}>
       {isAddCategory ? (
@@ -150,6 +156,8 @@ const PostListTitle = ({ categoryId, postsLength }: PostListTitleProps) => {
               ref={categoryRef}
               defaultValue={categoryName as string}
               onKeyDown={(e) => handleKeyDown(e)}
+              onBlur={handleUpdateCategory}
+              maxLength={12}
             />
           </h2>
           <button onClick={handleUpdateCategory}>수정하기</button>
@@ -160,17 +168,19 @@ const PostListTitle = ({ categoryId, postsLength }: PostListTitleProps) => {
             {categoryName} <span>({postsLength})</span>
           </h2>
 
-          <div>
-            <button
-              onClick={() =>
-                navigate(`${RouterInfo.WRITE.path}?category=${categoryId}`)
-              }
-            >
-              글쓰기
-            </button>
-            <button onClick={handleUpdateOpen}>수정</button>
-            <button onClick={handleDeleteCategory}>삭제</button>
-          </div>
+          {blogId === myInfo.blog_id && (
+            <div>
+              <button
+                onClick={() =>
+                  navigate(`${RouterInfo.WRITE.path}/?category=${categoryId}`)
+                }
+              >
+                글쓰기
+              </button>
+              <button onClick={handleUpdateOpen}>수정</button>
+              <button onClick={handleDeleteCategory}>삭제</button>
+            </div>
+          )}
         </>
       )}
     </PostsTitle>
