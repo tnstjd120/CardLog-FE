@@ -4,11 +4,12 @@ import ValidInputText from "components/common/Input/ValidInputText";
 import validObj from "./validObj";
 import Swal from "sweetalert2";
 import API_Path from "utils/path/API_Path";
-import { Dispatch } from "react";
+import { Dispatch, useState } from "react";
 import { SignUpInfoProps } from ".";
 import { palette } from "styles/theme";
 import { UserInfoStepStyles } from "styles/components/signup";
 import { api } from "libs/axios";
+import Loading from "../common/Loading";
 
 interface UserInfoStepProps {
   setSignUpStep: Dispatch<React.SetStateAction<number>>;
@@ -16,10 +17,14 @@ interface UserInfoStepProps {
 }
 
 const UserInfoStep = ({ setSignUpStep, setSignUpInfo }: UserInfoStepProps) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const handleSignUp = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
+
+    setIsLoading(true);
 
     // 클라이언트에서 유효성 검증
     for (let [key, item] of Object.entries(validObj)) {
@@ -64,11 +69,15 @@ const UserInfoStep = ({ setSignUpStep, setSignUpInfo }: UserInfoStepProps) => {
           confirmButtonText: "확인",
           focusConfirm: true,
         });
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   return (
     <form css={UserInfoStepStyles}>
+      {isLoading && <Loading />}
       <ValidInputText
         type="email"
         name="email"
@@ -86,6 +95,7 @@ const UserInfoStep = ({ setSignUpStep, setSignUpInfo }: UserInfoStepProps) => {
         validType="blog_id"
         validTooltip="아이디 형식에 적합합니다."
         invalidTooltip="블로그 아이디는 최소 6자리, 영문자로 시작하고 영문자 또는 숫자로 작성해주세요."
+        maxLength={20}
         validObj={validObj}
       />
 
@@ -96,6 +106,7 @@ const UserInfoStep = ({ setSignUpStep, setSignUpInfo }: UserInfoStepProps) => {
         validType="username"
         validTooltip="이름 형식에 적합합니다."
         invalidTooltip="이름은 한글 2~5 글자로 작성해주세요."
+        maxLength={5}
         validObj={validObj}
       />
 
@@ -105,7 +116,8 @@ const UserInfoStep = ({ setSignUpStep, setSignUpInfo }: UserInfoStepProps) => {
         placeholder="비밀번호"
         validType="password"
         validTooltip="비밀번호 형식에 적합합니다."
-        invalidTooltip="비밀번호는 최소 8자리 숫자,문자,특수문자 최소 1개를 포함해서 작성해주세요."
+        invalidTooltip="8~20 자리 숫자,문자,특수문자 최소 1개를 포함해서 작성해주세요."
+        maxLength={20}
         validObj={validObj}
       />
 
@@ -116,6 +128,7 @@ const UserInfoStep = ({ setSignUpStep, setSignUpInfo }: UserInfoStepProps) => {
         validType="passwordConfirm"
         validTooltip="비밀번호가 일치합니다."
         invalidTooltip="비밀번호가 일치하지 않습니다."
+        maxLength={20}
         validObj={validObj}
       />
 
