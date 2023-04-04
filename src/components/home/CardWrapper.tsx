@@ -6,12 +6,13 @@ import { useRef, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { RootState } from "store";
 import { ThemeStateProps } from "store/themeType";
 import { UserState } from "store/user";
 import { palette } from "styles/theme";
 import { emotionStyledProps } from "types/emotionStyled";
+import { MyInfoState } from "store/myInfo";
 import RouterInfo from "components/routes/RouterInfo";
 import PostDetail from "components/posts/PostDetail";
 
@@ -24,7 +25,12 @@ const CardWrapper = () => {
   const color = theme[themeType].color;
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const blogId = new URLSearchParams(location.search).get("blog_id");
   const user = useSelector<RootState>((state) => state.user) as UserState;
+  const myInfo = useSelector<RootState>((state) => state.myInfo) as MyInfoState;
+
   const [postId, setPostId] = useState<number>(0);
   const CardsRef = useRef<HTMLUListElement>(null);
 
@@ -42,22 +48,31 @@ const CardWrapper = () => {
   return (
     <CardWrapperContainer color={color}>
       <ul ref={CardsRef}>
-        <button type="button" onClick={() => navigate(RouterInfo.WRITE.path)}>
-          <AiOutlinePlus />
-        </button>
-
-        {user.post.map((item) => (
-          <li
-            key={item.id}
-            onClick={() => setPostId(item.id)}
-            css={css`
-              background-color: ${item.bg_color};
-              color: ${item.text_color};
-            `}
+        {blogId === myInfo.blog_id && (
+          <button
+            type="button"
+            onClick={() => navigate(`${RouterInfo.WRITE.path}/?isCard=true`)}
           >
-            <h3>{item.title}</h3>
-          </li>
-        ))}
+            <AiOutlinePlus />
+          </button>
+        )}
+
+        {user.post.length > 0 ? (
+          user.post.map((item) => (
+            <li
+              key={item.id}
+              onClick={() => setPostId(item.id)}
+              css={css`
+                background-color: ${item.bg_color};
+                color: ${item.text_color};
+              `}
+            >
+              <h3>{item.title}</h3>
+            </li>
+          ))
+        ) : (
+          <h2>카드가 없습니다.</h2>
+        )}
       </ul>
 
       <div className="controller">
@@ -91,6 +106,16 @@ const CardWrapperContainer = styled.div<emotionStyledProps>`
     overflow-x: auto;
     width: 100%;
     min-height: 460px;
+    position: relative;
+
+    h2 {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-weight: 400;
+      color: inherit;
+    }
 
     &::-webkit-scrollbar {
       height: 6px;
@@ -136,6 +161,7 @@ const CardWrapperContainer = styled.div<emotionStyledProps>`
       align-items: center;
       margin-left: 50px;
       min-width: 280px;
+      max-width: 280px;
       height: 400px;
       padding: 10px;
       cursor: pointer;
@@ -149,6 +175,10 @@ const CardWrapperContainer = styled.div<emotionStyledProps>`
       h3 {
         font-size: 1em;
         font-weight: 500;
+        width: 100%;
+        text-align: center;
+        overflow: hidden;
+        word-break: break-all;
       }
     }
   }
