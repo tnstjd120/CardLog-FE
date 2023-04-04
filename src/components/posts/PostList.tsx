@@ -95,7 +95,7 @@ const PostList = ({ postId, setPostId }: PostListProps) => {
                 <div>
                   <span>{days(post.create_at)}</span>
                   <span>
-                    <BiComment /> <strong>3</strong>
+                    <BiComment /> <strong>0</strong>
                   </span>
                 </div>
               </li>
@@ -116,8 +116,8 @@ const PostsContainer = styled.ul<emotionStyledProps>`
   padding: 30px 0;
 
   li {
-    margin-bottom: 50px;
-    padding-bottom: 30px;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
     border-bottom: 1px solid ${(props) => props.color};
     cursor: pointer;
 
