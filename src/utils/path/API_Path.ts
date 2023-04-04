@@ -17,6 +17,8 @@ const API_Path = {
   REFRESH_TOKEN: "accounts/auth/token/refresh/",
   USER_INFO: "accounts/user/",
   PROFILE_IMAGE: "accounts/image/",
+  EMAIL_SEARCH: "accounts/search/email/",
+  RANKINGS: "accounts/ranking/",
 };
 
 Object.freeze(API_Path);
