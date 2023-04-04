@@ -18,6 +18,7 @@ import { palette } from "styles/theme";
 import { Viewer } from "@toast-ui/react-editor";
 import Loading from "components/common/Loading";
 import Swal from "sweetalert2";
+import { MyInfoState } from "store/myInfo";
 
 interface PostDetailProps {
   postId: string | number;
@@ -38,7 +39,9 @@ const PostDetail = ({ postId, setPostId }: PostDetailProps) => {
   const categoryId = new URLSearchParams(location.search).get(
     "category"
   ) as string;
+  const blogId = new URLSearchParams(location.search).get("blog_id");
 
+  const myInfo = useSelector<RootState>((state) => state.myInfo) as MyInfoState;
   const [post, setPost] = useState<PostDetailResponseProps | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -63,34 +66,34 @@ const PostDetail = ({ postId, setPostId }: PostDetailProps) => {
       );
   };
 
-  if (isLoading) {
-    return <Loading />;
-  } else {
-    return (
-      <PostDetailContainer color={color} backgroundColor={backgroundColor}>
-        <div className="detail_header">
-          <Button onClick={() => setPostId(0)}>
-            <AiOutlineClose />
-          </Button>
+  if (isLoading) return <Loading />;
 
-          <h3>{post?.title}</h3>
-          <div className="detail_header_bottom">
-            <div className="post_info">
-              {post?.user.profile_img && (
-                <div className="img_wrap">
-                  <img
-                    src={`https://cardlog-bucket.s3.amazonaws.com/${post.user.profile_img}`}
-                    alt="post_thumbnail"
-                  />
-                </div>
-              )}
+  return (
+    <PostDetailContainer color={color} backgroundColor={backgroundColor}>
+      <div className="detail_header">
+        <Button onClick={() => setPostId(0)}>
+          <AiOutlineClose />
+        </Button>
 
-              <div className="text_wrap">
-                <strong>{post?.user.email}</strong>
-                <span>{days(post?.create_at ?? "")}</span>
+        <h3>{post?.title}</h3>
+        <div className="detail_header_bottom">
+          <div className="post_info">
+            {post?.user.profile_img && (
+              <div className="img_wrap">
+                <img
+                  src={`https://cardlog-bucket.s3.amazonaws.com/${post.user.profile_img}`}
+                  alt="post_thumbnail"
+                />
               </div>
-            </div>
+            )}
 
+            <div className="text_wrap">
+              <strong>{post?.user.email}</strong>
+              <span>{days(post?.create_at ?? "")}</span>
+            </div>
+          </div>
+
+          {blogId === myInfo.blog_id && (
             <div className="edit_buttons">
               <Button
                 onClick={() => {
@@ -126,22 +129,22 @@ const PostDetail = ({ postId, setPostId }: PostDetailProps) => {
                 삭제
               </Button>
             </div>
-          </div>
+          )}
         </div>
+      </div>
 
-        {post?.thumbnail && (
-          <div className="thumbnail">
-            <img
-              src={`https://cardlog-bucket.s3.amazonaws.com/${post.thumbnail}`}
-              alt="post_thumbnail"
-            />
-          </div>
-        )}
+      {post?.thumbnail && (
+        <div className="thumbnail">
+          <img
+            src={`https://cardlog-bucket.s3.amazonaws.com/${post.thumbnail}`}
+            alt="post_thumbnail"
+          />
+        </div>
+      )}
 
-        <Viewer initialValue={post?.content} />
-      </PostDetailContainer>
-    );
-  }
+      <Viewer initialValue={post?.content} />
+    </PostDetailContainer>
+  );
 };
 
 export default PostDetail;
