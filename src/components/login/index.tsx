@@ -35,7 +35,7 @@ const LoginForm = () => {
     setIsLoading(false);
 
     if (loginResponse === "OK") {
-      await accessApi
+      accessApi
         .get(API_Path.USER_INFO)
         .then((res) => {
           dispatch(setMyInfo(res.data));
