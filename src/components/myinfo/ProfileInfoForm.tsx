@@ -37,9 +37,9 @@ const ProfileInfoForm = () => {
       })
       .catch((error) => {
         let errorMessage = error;
-
+        console.log(error);
         for (let [key, value] of Object.entries(error.response.data)) {
-          errorMessage = value;
+          errorMessage = `"${key}" ${value} `;
           break;
         }
 
@@ -86,7 +86,7 @@ const ProfileInfoForm = () => {
 
           <input
             type="text"
-            defaultValue={myInfo.github_url}
+            defaultValue={myInfo.github_url ?? ""}
             name="github_url"
           />
         </div>
@@ -94,7 +94,11 @@ const ProfileInfoForm = () => {
         <div>
           <FaBlogger />
 
-          <input type="text" defaultValue={myInfo.blog_url} name="blog_url" />
+          <input
+            type="text"
+            defaultValue={myInfo.blog_url ?? ""}
+            name="blog_url"
+          />
         </div>
       </MyInfoInputBox>
 
