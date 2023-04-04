@@ -10,6 +10,7 @@ import { ThemeStateProps } from "store/themeType";
 import { useTheme } from "@emotion/react";
 import { emotionStyledProps } from "types/emotionStyled";
 import AddCategory from "./AddCategory";
+import { MyInfoState } from "store/myInfo";
 
 const Nav: React.FC = (): JSX.Element => {
   const { themeType } = useSelector<RootState>(
@@ -22,9 +23,11 @@ const Nav: React.FC = (): JSX.Element => {
   const hoverColor = theme[themeType].hoverColor;
 
   const user = useSelector<RootState>((state) => state.user) as UserState;
+  const myInfo = useSelector<RootState>((state) => state.myInfo) as MyInfoState;
 
   const location = useLocation();
   const categoryId = new URLSearchParams(location.search).get("category");
+  const blogId = new URLSearchParams(location.search).get("blog_id");
 
   return (
     <NavContainer
@@ -42,7 +45,7 @@ const Nav: React.FC = (): JSX.Element => {
         </Link>
       ))}
 
-      <AddCategory />
+      {blogId === myInfo.blog_id && <AddCategory />}
     </NavContainer>
   );
 };
