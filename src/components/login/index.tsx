@@ -10,13 +10,18 @@ import { useDispatch } from "react-redux";
 import { setMyInfo } from "store/myInfo";
 import { login } from "auth/jwtAuth";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Loading from "../common/Loading";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const formData = new FormData(e.currentTarget);
 
@@ -26,6 +31,8 @@ const LoginForm = () => {
     };
 
     const loginResponse = await login(reqData);
+
+    setIsLoading(false);
 
     if (loginResponse === "OK") {
       await accessApi
@@ -42,6 +49,7 @@ const LoginForm = () => {
 
   return (
     <>
+      {isLoading && <Loading />}
       <form css={loginFormStyle} onSubmit={handleLoginSubmit}>
         <InputText
           themeType="light"
