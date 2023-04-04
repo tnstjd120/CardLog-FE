@@ -6,6 +6,8 @@ import MyInfo from "pages/MyInfo";
 import Intro from "pages/Intro";
 import Posts from "pages/Posts";
 import Write from "pages/Write";
+import EmailSearch from "pages/EmailSearch";
+import PasswordSearch from "pages/PasswordSearch";
 
 export interface RouterItem {
   path: string;
@@ -44,6 +46,22 @@ const RouterInfo: RouterItemType = {
     isLoggedIn: false,
     isWithNav: false,
     isNavIn: true,
+  },
+  EMAIL_SEARCH: {
+    path: "/search/email",
+    element: <EmailSearch />,
+    label: "이메일 찾기",
+    isLoggedIn: false,
+    isWithNav: false,
+    isNavIn: false,
+  },
+  PASSWORD_SEARCH: {
+    path: "/search/password",
+    element: <PasswordSearch />,
+    label: "비밀번호 찾기",
+    isLoggedIn: false,
+    isWithNav: false,
+    isNavIn: false,
   },
   SIGNUP: {
     path: "/signup",
