@@ -56,7 +56,6 @@ const PostDetail = ({ postId, setPostId }: PostDetailProps) => {
       .get(`${API_Path.POSTS}${postId}`)
       .then((res) => {
         setPost(res.data);
-        console.log(res.data);
       })
       .catch((error) => console.log(error))
       .finally(() =>

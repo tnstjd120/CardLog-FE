@@ -22,19 +22,15 @@ const SignUpForm = () => {
   const [signUpInfo, setSignUpInfo] = useState<SignUpInfoProps | null>(null);
 
   useEffect(() => {
-    console.log("signupForm render");
     if (signUpStep === 3) {
       handleSignUp();
     }
   }, [signUpInfo]);
 
   const handleSignUp = async () => {
-    console.log("signup");
     await api
       .post(API_Path.SIGNUP, signUpInfo)
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
       .catch(console.error);
   };
 

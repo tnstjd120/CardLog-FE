@@ -4,7 +4,11 @@ import API_Path from "utils/path/API_Path";
 import jwt_decode from "jwt-decode";
 import RouterInfo from "components/routes/RouterInfo";
 import { palette } from "styles/theme";
-import { getCookie } from "utils/cookie/universal-cookie";
+import {
+  getCookie,
+  removeCookie,
+  setCookie,
+} from "utils/cookie/universal-cookie";
 
 let loginInterval: NodeJS.Timer | null = null;
 
@@ -19,6 +23,8 @@ export const login = async (data: LoginProps) => {
   await api
     .post(API_Path.LOGIN, data)
     .then((res) => {
+      setCookie("access", res.data.access_token);
+      setCookie("refresh", res.data.refresh_token);
       checkAccess();
       statusText = res.statusText;
     })
@@ -40,12 +46,12 @@ export const login = async (data: LoginProps) => {
 
 export const reissueAccess = async () => {
   const refreshToken = getCookie("refresh");
-  console.log("reissueAccess!");
+
   if (refreshToken) {
     await api
       .post(API_Path.REFRESH_TOKEN, { refresh: refreshToken })
       .then((res) => {
-        console.log(res);
+        setCookie("access", res.data.access);
       })
       .catch((error) => {
         console.log(error);
@@ -58,7 +64,6 @@ export const reissueAccess = async () => {
 };
 
 export const checkAccess = () => {
-  console.log("AccessToken Check!");
   const accessToken = getCookie("access");
 
   // access_token 없을 때
@@ -85,5 +90,10 @@ export const logout = async () => {
 
   await accessApi
     .post(API_Path.LOGOUT)
-    .then((res) => (window.location.href = RouterInfo.LOGIN.path));
+    .then((res) => {
+      removeCookie("access");
+      removeCookie("refresh");
+    })
+    .catch((error) => console.log(error))
+    .finally(() => (window.location.href = RouterInfo.LOGIN.path));
 };

@@ -84,7 +84,6 @@ const Write = () => {
       accessApi
         .get(`${API_Path.POSTS}${postId}`)
         .then((res) => {
-          console.log(res.data);
           setPost(res.data);
           setImageObj({
             preview: `https://cardlog-bucket.s3.amazonaws.com/${res.data.thumbnail}`,
@@ -123,7 +122,6 @@ const Write = () => {
     title: string,
     contentMarkdown: string
   ) => {
-    console.log(editorRef.current);
     if (!selectCategory) {
       selectCategoryRef.current?.focus();
       errorAlert("카테고리를 선택해주세요.");
@@ -183,7 +181,7 @@ const Write = () => {
           },
         }
       )
-      .then((res) => console.log(res))
+      .then((res) => {})
       .catch((error) => console.log(error))
       .finally(() => {
         navigate(-1);

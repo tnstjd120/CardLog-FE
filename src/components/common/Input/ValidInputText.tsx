@@ -80,7 +80,6 @@ const ValidInputText = React.forwardRef<HTMLInputElement, ValidInputTextProps>(
             validObj[validType].value = e.target.value;
             validType === "passwordConfirm" &&
               setIsValid(validObj.password.value === e.target.value);
-            console.log(validObj);
           }}
         />
         {/* FIXME 비밀번호 확인까지 작성 후 다시 비밀번호를 변경했을 때 비밀번호 확인 부분 일치하지 않는 부분 기능 작업 해야함. */}
