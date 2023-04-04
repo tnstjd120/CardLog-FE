@@ -53,12 +53,12 @@ const AddCategory = () => {
     formData.append("name", categoryRef.current?.value ?? "");
     accessApi
       .post(API_Path.CATEGORY_CREATE, formData)
-      .then((res) => {})
-      .catch((error) => console.log(error))
-      .finally(() => {
+      .then((res) => {
         setIsAddCategory(false);
-        navigate(`${RouterInfo.POST_LIST.path}/${location.search}`);
-      });
+        navigate(`${location.pathname}${location.search}`);
+      })
+      .catch((error) => console.log(error))
+      .finally(() => {});
   };
 
   return (
@@ -69,6 +69,7 @@ const AddCategory = () => {
           ref={categoryRef}
           onBlur={(e) => handleAddCategoryBlur(e)}
           onKeyDown={(e) => handleKeyDown(e)}
+          maxLength={12}
         />
       ) : (
         <button type="button" onClick={handleAddCategoryClick}>
