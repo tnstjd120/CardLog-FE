@@ -1,3 +1,11 @@
+export interface RankingResponseProps {
+  id: number;
+  username: string;
+  profile_img: string;
+  blog_id: string;
+  post_count: number;
+}
+
 export interface PostResponseProps {
   id: number;
   category: number;
