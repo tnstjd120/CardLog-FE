@@ -58,6 +58,19 @@ const PostsWrap = styled.section`
     padding-top: 0;
     position: relative;
   }
+
+  @media screen and (max-width: 768px) {
+    & {
+      padding-top: 20px;
+      /* flex-direction: column-reverse;
+      align-items: center;
+      justify-content: flex-end; */
+
+      & > div {
+        width: 100%;
+      }
+    }
+  }
 `;
 
 const RightArea = styled.div`
@@ -72,6 +85,10 @@ const RightArea = styled.div`
   & > div:first-of-type {
     width: 100%;
     height: 40%;
+  }
+
+  @media screen and (max-width: 768px) {
+    display: none;
   }
 `;
 

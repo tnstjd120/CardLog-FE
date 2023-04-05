@@ -66,6 +66,7 @@ const Write = () => {
   const [post, setPost] = useState<PostDetailResponseProps | null>(null);
   const [categorys, setCategorys] = useState<CategoryResponseProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
   const editorRef = useRef<any>();
   const selectCategoryRef = useRef<HTMLSelectElement | null>(null);
@@ -73,6 +74,18 @@ const Write = () => {
   const cardTypeRef = useRef<HTMLInputElement | null>(null);
   const cardBgColorRef = useRef<HTMLInputElement | null>(null);
   const cardTextColorRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (postId) {
@@ -264,10 +277,9 @@ const Write = () => {
       </PostSettingHeader>
       <Editor
         initialValue={post?.content || ""}
-        previewStyle="vertical"
         height="100%"
         initialEditType="markdown" //wysiwyg, markdown
-        // previewStyle={'tab'}
+        previewStyle={windowWidth > 1024 ? "vertical" : "tab"}
         useCommandShortcut={false}
         theme={themeType}
         toolbarItems={toolbarItems}

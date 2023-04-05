@@ -201,4 +201,11 @@ const CardWrapperContainer = styled.div<emotionStyledProps>`
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    & {
+      margin: 0;
+      margin-left: 20px;
+    }
+  }
 `;

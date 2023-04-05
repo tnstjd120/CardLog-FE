@@ -50,6 +50,7 @@ const HomeTopArea = styled.div`
 
   & > div {
     width: 50%;
+    height: 280px;
     position: relative;
   }
 
@@ -64,5 +65,16 @@ const HomeTopArea = styled.div`
     line-height: 1.5;
     font-size: 1em;
     font-weight: 400;
+  }
+
+  @media screen and (max-width: 768px) {
+    & {
+      flex-direction: column-reverse;
+      align-items: center;
+
+      & > div {
+        width: 100%;
+      }
+    }
   }
 `;

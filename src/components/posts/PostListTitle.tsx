@@ -199,8 +199,9 @@ const PostsTitle = styled.div<emotionStyledProps>`
   transition: 0.4s;
   padding-bottom: 6px;
   position: sticky;
-  top: 0;
+  top: -1px;
   padding-top: 30px;
+  z-index: 1;
 
   h2 {
     font-size: 1.2rem;
