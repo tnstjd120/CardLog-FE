@@ -51,7 +51,7 @@ const ValidInputText = React.forwardRef<HTMLInputElement, ValidInputTextProps>(
       & small {
         position: absolute;
         left: 6px;
-        bottom: 0;
+        top: 80%;
         color: ${palette.black1};
       }
     `;
