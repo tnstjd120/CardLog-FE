@@ -16,7 +16,12 @@ export const useUserInfo = async () => {
   const blogId = params.get("blog_id");
 
   const pathTypeCheck = async () => {
-    const notAccessPath: string[] = ["/", "/login", "/signup"];
+    const notAccessPath: string[] = [
+      RouterInfo.HOME.path,
+      RouterInfo.LOGIN.path,
+      RouterInfo.SIGNUP.path,
+      RouterInfo.SIGNUP_SUCCESS.path,
+    ];
 
     !notAccessPath.includes(pathname)
       ? await accessApi
