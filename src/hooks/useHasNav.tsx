@@ -6,6 +6,7 @@ export const useHasNav = (path: string): boolean => {
   const pathArr = path.split("/");
   if (pathArr.length > 2) {
     if (pathArr[1] === "posts") return true;
+    if (pathArr[1] === "write") return false;
   }
 
   for (let [key, value] of Object.entries(RouterInfo)) {
