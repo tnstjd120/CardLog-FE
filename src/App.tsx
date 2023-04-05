@@ -76,6 +76,7 @@ const Main = styled.main<emotionStyledProps>`
   top: 50%;
   transform: translate(-50%, -50%);
   border-radius: 6px;
+  background-color: inherit;
   /* box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1); */
 `;
 
@@ -83,7 +84,7 @@ const Content = styled.div`
   background-color: inherit;
   color: inherit;
   height: 100%;
-  width: calc(100% - 200px);
+  width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   transition: all 0.4s;
