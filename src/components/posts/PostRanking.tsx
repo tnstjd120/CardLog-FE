@@ -10,8 +10,19 @@ import Loading from "../common/Loading";
 import { useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { palette } from "styles/theme";
+import { useSelector } from "react-redux";
+import { RootState } from "store";
+import { ThemeStateProps } from "store/themeType";
+import { useTheme } from "@emotion/react";
 
 const PostRanking = () => {
+  const { themeType } = useSelector<RootState>(
+    (state) => state.themeType
+  ) as ThemeStateProps;
+
+  const theme = useTheme();
+  const backgroundColor = theme[themeType].backgroundColor;
+
   const navigate = useNavigate();
 
   const [rankings, setRankings] = useState<RankingResponseProps[]>([]);
@@ -36,7 +47,7 @@ const PostRanking = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <PostRankingContainer>
+    <PostRankingContainer backgroundColor={backgroundColor}>
       <h2>Top Writers</h2>
 
       <ul>
@@ -82,18 +93,23 @@ const PostRankingContainer = styled.div<emotionStyledProps>`
   height: 60%;
   border: 1px solid #ddd;
   border-radius: 6px;
+  overflow-y: auto;
 
   h2 {
     text-align: center;
     padding: 20px 0;
     font-size: 1rem;
     font-weight: 400;
+    position: sticky;
+    top: 0;
+    background-color: ${(props) => props.backgroundColor};
   }
 
   ul {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     padding: 0 12px;
 
     li {
