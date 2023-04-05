@@ -25,7 +25,7 @@ const Home = () => {
 
       <CardWrapper />
 
-      <TodayBox />
+      {/* <TodayBox /> */}
     </HomeContainer>
   );
 };
