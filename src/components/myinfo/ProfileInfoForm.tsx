@@ -59,7 +59,11 @@ const ProfileInfoForm = () => {
     <form onSubmit={handleSubmit}>
       <MyInfoInputBox>
         <h5>내 소개</h5>
-        <textarea defaultValue={myInfo.about} name="about"></textarea>
+        <textarea
+          defaultValue={myInfo.about}
+          name="about"
+          maxLength={100}
+        ></textarea>
       </MyInfoInputBox>
 
       <MyInfoInputBox>
@@ -70,13 +74,23 @@ const ProfileInfoForm = () => {
 
       <MyInfoInputBox>
         <h5>이름</h5>
-        <input type="text" defaultValue={myInfo.username} name="username" />
+        <input
+          type="text"
+          defaultValue={myInfo.username}
+          name="username"
+          maxLength={5}
+        />
       </MyInfoInputBox>
 
       <MyInfoInputBox>
         <h5>카드로그 제목</h5>
 
-        <input type="text" defaultValue={myInfo.blog_name} name="blog_name" />
+        <input
+          type="text"
+          defaultValue={myInfo.blog_name}
+          name="blog_name"
+          maxLength={12}
+        />
       </MyInfoInputBox>
 
       <MyInfoInputBox>
