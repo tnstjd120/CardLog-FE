@@ -12,12 +12,17 @@ const SocialLink: React.FC = (): JSX.Element => {
 
   return (
     <SocialLinkContainer>
-      <a href={user.github_url} target="_blank" rel="noreferrer">
-        <FaGithubSquare />
-      </a>
-      <a href={user.blog_url} target="_blank" rel="noreferrer">
-        <FaBlogger />
-      </a>
+      {user.github_url && (
+        <a href={user.github_url} target="_blank" rel="noreferrer">
+          <FaGithubSquare />
+        </a>
+      )}
+
+      {user.blog_url && (
+        <a href={user.blog_url} target="_blank" rel="noreferrer">
+          <FaBlogger />
+        </a>
+      )}
     </SocialLinkContainer>
   );
 };
