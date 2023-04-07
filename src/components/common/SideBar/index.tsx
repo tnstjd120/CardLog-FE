@@ -4,8 +4,7 @@ import styled from "@emotion/styled";
 import ProfileInfo from "./ProfileInfo";
 import Nav from "./Nav";
 import SocialLink from "./SocialLink";
-import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { RiMenuFoldFill, RiMenuUnfoldFill } from "react-icons/ri";
+import { RiMenuUnfoldFill } from "react-icons/ri";
 
 const SideBar: React.FC = (): JSX.Element => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
