@@ -5,9 +5,6 @@ import Swal from "sweetalert2";
 import { setCookie } from "utils/cookie/universal-cookie";
 import API_Path from "utils/path/API_Path";
 
-const ACCESS_EXPIRY_TIME = 60000 * 5; // 5분 accessToken
-const REFRESH_EXPIRY_TIME = 3600 * 1000 * 24; // 24시간 refreshToken
-
 interface LoginProps {
   email: string;
   password: string;
@@ -26,7 +23,10 @@ export const login = async (data: LoginProps) => {
     .catch((error) => {
       Swal.fire({
         icon: "error",
-        text: "로그인에 실패하였습니다.",
+        html: `
+          <h4>로그인에 실패하였습니다.</h4>
+          <p>${error}</p>
+        `,
         confirmButtonColor: palette.black4,
         confirmButtonText: "확인",
         focusConfirm: true,
