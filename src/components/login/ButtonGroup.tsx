@@ -4,7 +4,6 @@ import { palette } from "styles/theme";
 import Button, { ButtonProps } from "components/common/Button";
 import { useNavigate } from "react-router-dom";
 import RouterInfo from "components/routes/RouterInfo";
-import { logout } from "auth/jwtAuth";
 import Swal from "sweetalert2";
 
 const ButtonGroup = () => {

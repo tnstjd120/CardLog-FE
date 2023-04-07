@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import API_Path from "utils/path/API_Path";
 import { useLocation, useNavigate } from "react-router-dom";
 import { api } from "libs/axios";
-import { PostDetailResponseProps, PostResponseProps } from "types/Post";
+import { PostDetailResponseProps } from "types/Post";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { ThemeStateProps } from "store/themeType";

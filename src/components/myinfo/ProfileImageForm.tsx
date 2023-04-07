@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import Button from "components/common/Button";
-import { accessApi, api } from "libs/axios";
+import { accessApi } from "libs/axios";
 import { useRef } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { MdModeEditOutline } from "react-icons/md";
