@@ -7,7 +7,6 @@ import "@toast-ui/editor/dist/i18n/ko-kr";
 import React, { useEffect, useRef, useState } from "react";
 import InputText from "components/common/Input/InputText";
 import API_Path from "utils/path/API_Path";
-import Swal from "sweetalert2";
 import Loading from "components/common/Loading";
 import Button from "components/common/Button";
 import CheckBox from "components/common/CheckBox";
@@ -23,10 +22,10 @@ import { emotionStyledProps } from "types/emotionStyled";
 import { MyInfoState } from "store/myInfo";
 import { CategoryResponseProps } from "types/Category";
 import { accessApi, api } from "libs/axios";
-import { palette } from "styles/theme";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PostDetailResponseProps } from "types/Post";
 import { FaArrowLeft } from "react-icons/fa";
+import { errorAlert } from "libs/sweetalert";
 
 export interface ImageObjProps {
   preview: string | undefined;
@@ -118,18 +117,6 @@ const Write = () => {
         .catch((error) => console.log(error));
   }, [myInfo]);
 
-  const errorAlert = (text: string) => {
-    Swal.fire({
-      icon: "error",
-      html: `
-        <h4>${text}</h4>
-      `,
-      confirmButtonColor: palette.black4,
-      confirmButtonText: "확인",
-      focusConfirm: true,
-    });
-  };
-
   const validationCheck = (
     selectCategory: number,
     title: string,
@@ -144,7 +131,6 @@ const Write = () => {
       errorAlert("제목을 작성해주세요.");
       return false;
     } else if (!contentMarkdown) {
-      // editorRef.current.editorInst.mdEditor.clipboard.focus();
       errorAlert("내용을 작성해주세요.");
       return false;
     }
@@ -155,7 +141,6 @@ const Write = () => {
   const handlePostFinishClick = async () => {
     const editorInstance = editorRef.current.getInstance();
 
-    const contentHtml = editorInstance.getHTML();
     const contentMarkdown = editorInstance.getMarkdown();
     const thumbnail = imageObj?.imageFile ?? "";
     const selectCategory = selectCategoryRef.current?.value ?? "";
@@ -198,9 +183,6 @@ const Write = () => {
       .catch((error) => console.log(error))
       .finally(() => {
         navigate(-1);
-        // navigate(
-        //   `${RouterInfo.POST_LIST.path}?blog_id=${myInfo.blog_id}&category=${categorys[0].id}`
-        // );
       });
   };
 
