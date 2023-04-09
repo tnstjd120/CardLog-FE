@@ -62,11 +62,15 @@ http://cardlog.life
 
 ![CardLog 회원가입 시연영상](https://user-images.githubusercontent.com/67936051/229964169-17452754-b445-44dd-b0f8-a2192c134809.gif)
 
+---
+
 <br>
 
 **메인 홈**
 
 ![CardLog 메인화면 시연영상](https://user-images.githubusercontent.com/67936051/229964802-722471fe-f470-4c64-aa84-bfab918eb9d8.gif)
+
+---
 
 <br>
 
@@ -74,17 +78,23 @@ http://cardlog.life
 
 ![CardLog 프로필이미지 변경 시연영상](https://user-images.githubusercontent.com/67936051/229964900-9722f902-a01a-4a09-bcf2-dbeb544ccb01.gif)
 
+---
+
 <br>
 
 **내 정보 수정**
 
 ![CardLog 내정보 전체수정 시연영상](https://user-images.githubusercontent.com/67936051/229964992-a9a2d538-dc99-4a23-bbc0-c8444f0c25d1.gif)
 
+---
+
 <br>
 
 **카테고리 생성 / 게시글 작성**
 
 ![CardLog 카테고리 생성 및 게시글 작성 시연영상](https://user-images.githubusercontent.com/67936051/229965532-3416e0f9-4bc5-4b88-971c-5535e8810646.gif)
+
+---
 
 <br>
 
