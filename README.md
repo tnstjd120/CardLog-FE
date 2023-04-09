@@ -13,7 +13,9 @@ pw: pass120!
 
 ### 😁 CardLog 서비스는?
 
-> CardLog는 **_블로그_** 기능과 **_카드_** 기능을 활용한 블로그 서비스 입니다.
+> - CardLog는 **_블로그_** 기능과 **_카드_** 기능을 활용한 블로그 서비스 입니다.
+
+- 본래는 SSR 방식으로 구현하기 위해 Next.js를 사용할 예정이였으나, CSR 방식으로 먼저 구현하여 경험 후 SSR 방식으로 다시 한 번 구현하기로 계획을 했습니다.
 
 <br />
 <br />
@@ -56,36 +58,36 @@ http://cardlog.life
 
 <br>
 
-***회원가입***
+**_회원가입_**
 
 ![CardLog 회원가입 시연영상](https://user-images.githubusercontent.com/67936051/229964169-17452754-b445-44dd-b0f8-a2192c134809.gif)
 
 <br>
 
-***메인 홈***
+**_메인 홈_**
 
 ![CardLog 메인화면 시연영상](https://user-images.githubusercontent.com/67936051/229964802-722471fe-f470-4c64-aa84-bfab918eb9d8.gif)
 
 <br>
 
-***프로필 이미지 변경***
+**_프로필 이미지 변경_**
 
 ![CardLog 프로필이미지 변경 시연영상](https://user-images.githubusercontent.com/67936051/229964900-9722f902-a01a-4a09-bcf2-dbeb544ccb01.gif)
 
 <br>
 
-***내 정보 수정***
+**_내 정보 수정_**
 
 ![CardLog 내정보 전체수정 시연영상](https://user-images.githubusercontent.com/67936051/229964992-a9a2d538-dc99-4a23-bbc0-c8444f0c25d1.gif)
 
 <br>
 
-***카테고리 생성 / 게시글 작성***
+**_카테고리 생성 / 게시글 작성_**
 
 ![CardLog 카테고리 생성 및 게시글 작성 시연영상](https://user-images.githubusercontent.com/67936051/229965532-3416e0f9-4bc5-4b88-971c-5535e8810646.gif)
 
 <br>
 
-***게시글 수정 및 삭제***
+**_게시글 수정 및 삭제_**
 
 ![CardLog 게시글 수정 및 삭제 시연영상](https://user-images.githubusercontent.com/67936051/229965555-eecf65b6-d0c9-4dcb-a33e-d65a995f7b30.gif)
