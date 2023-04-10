@@ -1,3 +1,4 @@
+import { errorAlert, successAlert } from "libs/sweetalert";
 import styled from "@emotion/styled";
 import Button from "components/common/Button";
 import { accessApi } from "libs/axios";
@@ -6,7 +7,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { MyInfoState } from "store/myInfo";
 import { palette } from "styles/theme";
-import Swal from "sweetalert2";
 import API_Path from "utils/path/API_Path";
 
 const ProfileInfoForm = () => {
@@ -25,15 +25,7 @@ const ProfileInfoForm = () => {
         blog_url: formData.get("blog_url"),
       })
       .then((res) => {
-        Swal.fire({
-          icon: "success",
-          html: `
-            <h4>성공적으로 수정되었습니다.</h4>
-          `,
-          confirmButtonColor: palette.black4,
-          confirmButtonText: "확인",
-          focusConfirm: true,
-        });
+        successAlert("성공적으로 수정되었습니다.");
       })
       .catch((error) => {
         let errorMessage = error;
@@ -43,15 +35,7 @@ const ProfileInfoForm = () => {
           break;
         }
 
-        Swal.fire({
-          icon: "error",
-          html: `
-            <h4>${errorMessage}</h4>
-          `,
-          confirmButtonColor: palette.black4,
-          confirmButtonText: "확인",
-          focusConfirm: true,
-        });
+        errorAlert(errorMessage);
       });
   };
 
