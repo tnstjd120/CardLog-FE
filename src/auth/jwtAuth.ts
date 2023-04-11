@@ -1,14 +1,13 @@
 import { accessApi, api } from "libs/axios";
-import Swal from "sweetalert2";
 import API_Path from "utils/path/API_Path";
 import jwt_decode from "jwt-decode";
 import RouterInfo from "components/routes/RouterInfo";
-import { palette } from "styles/theme";
 import {
   getCookie,
   removeCookie,
   setCookie,
 } from "utils/cookie/universal-cookie";
+import { errorAlert } from "libs/sweetalert";
 
 let loginInterval: NodeJS.Timer | null = null;
 
@@ -30,15 +29,8 @@ export const login = async (data: LoginProps) => {
     })
     .catch((error) => {
       statusText = error.response.statusText;
-      Swal.fire({
-        icon: "error",
-        html: `
-          <h4>로그인 실패</h4>
-        `,
-        confirmButtonColor: palette.black4,
-        confirmButtonText: "확인",
-        focusConfirm: true,
-      });
+
+      errorAlert("로그인 실패");
     });
 
   return statusText;
