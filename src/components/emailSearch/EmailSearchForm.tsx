@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import { palette } from "styles/theme";
 import { useNavigate } from "react-router-dom";
 import RouterInfo from "../routes/RouterInfo";
+import { warningAlert } from "libs/sweetalert";
 
 const EmailSearchForm = () => {
   const navigate = useNavigate();
@@ -26,13 +27,7 @@ const EmailSearchForm = () => {
     // 클라이언트에서 유효성 검증
     for (let [key, item] of Object.entries(validObj)) {
       if (["username", "phone"].includes(key) && !item.isTest) {
-        return Swal.fire({
-          icon: "warning",
-          text: "각 항목 형식에 맞게 작성해주세요.",
-          confirmButtonColor: palette.black4,
-          confirmButtonText: "확인",
-          focusConfirm: true,
-        });
+        return warningAlert("각 항목 형식에 맞게 작성해주세요.");
       }
     }
 

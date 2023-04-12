@@ -24,3 +24,15 @@ export const successAlert = (text: string) => {
     focusConfirm: true,
   });
 };
+
+export const warningAlert = (text: string) => {
+  Swal.fire({
+    icon: "warning",
+    html: `
+        <h4>${text}</h4>
+      `,
+    confirmButtonColor: palette.black4,
+    confirmButtonText: "확인",
+    focusConfirm: true,
+  });
+};
