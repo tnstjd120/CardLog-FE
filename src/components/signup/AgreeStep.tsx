@@ -3,8 +3,7 @@ import { Dispatch, useEffect, useState } from "react";
 import CheckBox, { CheckBoxProps } from "components/common/CheckBox";
 import { css } from "@emotion/react";
 import MobileBottomButton from "components/common/Button/MobileBottomButton";
-import Swal from "sweetalert2";
-import { palette } from "styles/theme";
+import { errorAlert } from "libs/sweetalert";
 
 interface AgreeStepProps {
   setSignUpStep: Dispatch<React.SetStateAction<number>>;
@@ -49,13 +48,7 @@ const AgreeStep = ({ setSignUpStep }: AgreeStepProps) => {
 
     isEssential
       ? setSignUpStep((prev) => prev + 1)
-      : Swal.fire({
-          icon: "error",
-          text: "필수 항목을 체크해주세요.",
-          confirmButtonColor: palette.black4,
-          confirmButtonText: "확인",
-          focusConfirm: true,
-        });
+      : errorAlert("필수 항목을 체크해주세요.");
   };
 
   const handleAllCheck = () => {
