@@ -2,14 +2,13 @@
 import MobileBottomButton from "components/common/Button/MobileBottomButton";
 import ValidInputText from "components/common/Input/ValidInputText";
 import validObj from "./validObj";
-import Swal from "sweetalert2";
 import API_Path from "utils/path/API_Path";
 import { Dispatch, useState } from "react";
 import { SignUpInfoProps } from ".";
-import { palette } from "styles/theme";
 import { UserInfoStepStyles } from "styles/components/signup";
 import { api } from "libs/axios";
 import Loading from "../common/Loading";
+import { errorAlert, warningAlert } from "libs/sweetalert";
 
 interface UserInfoStepProps {
   setSignUpStep: Dispatch<React.SetStateAction<number>>;
@@ -29,13 +28,7 @@ const UserInfoStep = ({ setSignUpStep, setSignUpInfo }: UserInfoStepProps) => {
     // 클라이언트에서 유효성 검증
     for (let [key, item] of Object.entries(validObj)) {
       if (!item.isTest) {
-        return Swal.fire({
-          icon: "warning",
-          text: "각 항목 형식에 맞게 작성해주세요.",
-          confirmButtonColor: palette.black4,
-          confirmButtonText: "확인",
-          focusConfirm: true,
-        });
+        return warningAlert("각 항목 형식에 맞게 작성해주세요.");
       }
     }
 
@@ -59,16 +52,7 @@ const UserInfoStep = ({ setSignUpStep, setSignUpInfo }: UserInfoStepProps) => {
           break;
         }
 
-        Swal.fire({
-          icon: "error",
-          html: `
-            <h4>회원가입 실패</h4>
-            <p>${errorMessage}</p>
-          `,
-          confirmButtonColor: palette.black4,
-          confirmButtonText: "확인",
-          focusConfirm: true,
-        });
+        errorAlert(`회원가입 실패<br /> ${errorMessage}`);
       })
       .finally(() => {
         setIsLoading(false);
