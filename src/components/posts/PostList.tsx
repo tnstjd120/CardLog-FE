@@ -175,6 +175,9 @@ const PostsContainer = styled.ul<emotionStyledProps>`
           &::after {
             display: none;
           }
+          img {
+            display: none;
+          }
         }
       }
     }
