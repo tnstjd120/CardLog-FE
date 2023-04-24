@@ -4,7 +4,7 @@ import { palette } from "styles/theme";
 import Button, { ButtonProps } from "components/common/Button";
 import { useNavigate } from "react-router-dom";
 import RouterInfo from "components/routes/RouterInfo";
-import Swal from "sweetalert2";
+import { basicAlert } from "libs/sweetalert";
 
 const ButtonGroup = () => {
   const navigate = useNavigate();
@@ -44,18 +44,16 @@ const ButtonGroup = () => {
       <CustomButton onClick={() => navigate(EMAIL_SEARCH.path)}>
         이메일 찾기
       </CustomButton>
-      <CustomButton onClick={() => {
-        Swal.fire({
-          // icon: "warning",
-          html: `
+      <CustomButton
+        onClick={() =>
+          basicAlert(`
             <h1>🥹</h1>
             <p>열심히 개발하고 있어요..!</p>
-          `,
-          confirmButtonColor: palette.black4,
-          confirmButtonText: "확인",
-          focusConfirm: true,
-        });
-      }}>비밀번호 찾기</CustomButton>
+          `)
+        }
+      >
+        비밀번호 찾기
+      </CustomButton>
       <CustomButton onClick={() => navigate(SIGNUP.path)}>
         회원가입
       </CustomButton>

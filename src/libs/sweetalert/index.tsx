@@ -36,3 +36,12 @@ export const warningAlert = (text: string) => {
     focusConfirm: true,
   });
 };
+
+export const basicAlert = (text: string) => {
+  Swal.fire({
+    html: `${text}`,
+    confirmButtonColor: palette.black4,
+    confirmButtonText: "확인",
+    focusConfirm: true,
+  });
+};
