@@ -1,7 +1,6 @@
+import { errorAlert } from "libs/sweetalert";
 import axios from "axios";
 import { api } from "libs/axios";
-import { palette } from "styles/theme";
-import Swal from "sweetalert2";
 import { setCookie } from "utils/cookie/universal-cookie";
 import API_Path from "utils/path/API_Path";
 
@@ -21,16 +20,10 @@ export const login = async (data: LoginProps) => {
       loginSuccess(res.data.access_token);
     })
     .catch((error) => {
-      Swal.fire({
-        icon: "error",
-        html: `
-          <h4>로그인에 실패하였습니다.</h4>
-          <p>${error}</p>
-        `,
-        confirmButtonColor: palette.black4,
-        confirmButtonText: "확인",
-        focusConfirm: true,
-      });
+      errorAlert(`
+      <h4>로그인에 실패하였습니다.</h4>
+      <p>${error}</p>
+    `);
     });
 };
 
