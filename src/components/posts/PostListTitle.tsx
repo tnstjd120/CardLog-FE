@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 import { palette } from "styles/theme";
 import { MyInfoState } from "store/myInfo";
 import Loading from "../common/Loading";
+import { warningAlert } from "libs/sweetalert";
 
 interface PostListTitleProps {
   categoryId: string | number;
@@ -75,15 +76,7 @@ const PostListTitle = ({ categoryId, postsLength }: PostListTitleProps) => {
           .post(API_Path.CATEGORY_DELETE, formData)
           .then((res) => {
             if (res.data.message !== "success") {
-              Swal.fire({
-                icon: "warning",
-                html: `
-                <h4>${res.data.message}</h4>
-                `,
-                confirmButtonText: "확인",
-                confirmButtonColor: palette.black3,
-              });
-
+              warningAlert(res.data.message);
               return;
             }
 
