@@ -17,7 +17,7 @@ interface LoginProps {
 }
 
 export const login = async (data: LoginProps) => {
-  let statusText = "Bad Request..";
+  let statusText = "Bad Request...";
 
   await api
     .post(API_Path.LOGIN, data)
