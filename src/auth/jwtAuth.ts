@@ -30,7 +30,7 @@ export const login = async (data: LoginProps) => {
     .catch((error) => {
       statusText = error.response.statusText;
 
-      errorAlert("로그인에 실패하였습니다.");
+      errorAlert("로그인에 실패하였습니다");
     });
 
   return statusText;
