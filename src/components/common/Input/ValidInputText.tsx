@@ -28,7 +28,7 @@ const ValidInputText = React.forwardRef<HTMLInputElement, ValidInputTextProps>(
       props;
     const [isValid, setIsValid] = useState<boolean | null>(null);
 
-    // FIXME ref를 컴포넌트 안으로 바꿨는데 이걸로 처리할 수 있는 부분 생각하기
+    // FIXME ref를 컴포넌트 안으로 바꿨는데 이걸로 처리할 수 있는 부분 생각하기!
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     const tooltipStyle = css`
